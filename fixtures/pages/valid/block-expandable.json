@@ -1,0 +1,17 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "expandable",
+      "title": "Go deeper: the TCP three-way handshake",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The client sends SYN, the server replies SYN-ACK, and the client sends ACK."
+        }
+      ]
+    }
+  ]
+}

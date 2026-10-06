@@ -1,0 +1,10 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "A **firewall** filters *network* traffic using `rules`."
+    }
+  ]
+}

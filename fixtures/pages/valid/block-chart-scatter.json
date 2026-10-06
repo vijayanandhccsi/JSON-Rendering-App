@@ -1,0 +1,35 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "scatter",
+      "title": "Sample scatter chart",
+      "description": "Shows sample data for a scatter chart.",
+      "note": "Illustrative values",
+      "series": [
+        {
+          "name": "Hosts",
+          "points": [
+            {
+              "x": 1,
+              "y": 2
+            },
+            {
+              "x": 2,
+              "y": 4
+            },
+            {
+              "x": 3,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "xAxisLabel": "Latency",
+      "yAxisLabel": "Loss"
+    }
+  ]
+}

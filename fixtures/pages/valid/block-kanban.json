@@ -1,0 +1,33 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "kanban",
+      "columns": [
+        {
+          "title": "Learned",
+          "cards": [
+            {
+              "title": "IP addressing",
+              "text": "Addresses and masks"
+            }
+          ]
+        },
+        {
+          "title": "Practicing",
+          "cards": [
+            {
+              "title": "Subnetting"
+            }
+          ]
+        },
+        {
+          "title": "Mastered",
+          "cards": []
+        }
+      ]
+    }
+  ]
+}

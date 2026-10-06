@@ -1,0 +1,25 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "stacked-area",
+      "title": "Sample stacked-area chart",
+      "description": "Shows sample data for a stacked-area chart.",
+      "note": "Illustrative values",
+      "labels": ["Q1", "Q2", "Q3"],
+      "series": [
+        {
+          "name": "Low",
+          "values": [4, 6, 5]
+        },
+        {
+          "name": "High",
+          "values": [2, 1, 3]
+        }
+      ]
+    }
+  ]
+}

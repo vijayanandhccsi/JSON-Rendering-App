@@ -1,0 +1,80 @@
+{
+  "chapter": "network-security-basics",
+  "title": "What is a firewall?",
+  "summary": "Learn what a firewall does, how it filters traffic, and the difference between stateless and stateful firewalls.",
+  "estimatedMinutes": 6,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "A **firewall** sits between networks and decides which traffic is allowed through."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How a firewall works"
+    },
+    {
+      "type": "image",
+      "src": "firewall-between-networks.webp",
+      "alt": "Firewall between networks",
+      "description": "A firewall placed between the internet and an internal network, with arrows showing allowed and blocked traffic.",
+      "caption": "A firewall filters traffic between networks"
+    },
+    {
+      "type": "callout",
+      "variant": "tip",
+      "title": "Exam tip",
+      "text": "A **stateful** firewall tracks connections. A **stateless** firewall checks each packet on its own."
+    },
+    {
+      "type": "flipcard",
+      "cards": [
+        {
+          "front": "Stateless firewall",
+          "back": "Checks each packet against rules without remembering earlier packets."
+        },
+        {
+          "front": "Stateful firewall",
+          "back": "Tracks the state of connections and allows replies to approved requests."
+        }
+      ]
+    },
+    {
+      "type": "scenario",
+      "situation": "An external host sends unexpected traffic to port 3389 on an internal server.",
+      "question": "What should the firewall do by default?",
+      "options": [
+        {
+          "text": "Allow it, since it might be useful",
+          "correct": false,
+          "feedback": "A default-deny approach blocks traffic that is not explicitly allowed."
+        },
+        {
+          "text": "Block it unless a rule allows it",
+          "correct": true,
+          "feedback": "Correct. Default deny is the safer approach."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key takeaways"
+    },
+    {
+      "type": "list",
+      "style": "checklist",
+      "items": [
+        "A firewall filters traffic using rules",
+        "Stateful firewalls track connections",
+        "Default deny is the safer approach"
+      ]
+    }
+  ],
+  "imageBriefs": [
+    {
+      "file": "firewall-between-networks.webp",
+      "brief": "Simple diagram: internet on the left, firewall in the middle, internal network on the right, with arrows for allowed and blocked traffic."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Broken",
+  "blocks": [,]
+}

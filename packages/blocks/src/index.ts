@@ -1,1 +1,2 @@
-export const BLOCKS_PACKAGE_NAME = "@certkraft/blocks";
+export * from "./schema";
+export * from "./validate";

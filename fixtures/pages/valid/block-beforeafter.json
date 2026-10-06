@@ -1,0 +1,32 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "beforeafter",
+      "before": {
+        "src": "acl-wrong.webp",
+        "alt": "Misconfigured ACL",
+        "description": "An access list that allows all traffic.",
+        "label": "Misconfigured"
+      },
+      "after": {
+        "src": "acl-correct.webp",
+        "alt": "Correct ACL",
+        "description": "An access list that permits only required traffic.",
+        "label": "Correct"
+      }
+    }
+  ],
+  "imageBriefs": [
+    {
+      "file": "acl-wrong.webp",
+      "brief": "Image for acl-wrong.webp."
+    },
+    {
+      "file": "acl-correct.webp",
+      "brief": "Image for acl-correct.webp."
+    }
+  ]
+}

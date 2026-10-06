@@ -1,0 +1,16 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "smartsheet",
+      "title": "Common ports",
+      "headers": ["Port", "Protocol", "Use"],
+      "rows": [
+        ["22", "SSH", "Secure remote login"],
+        ["443", "HTTPS", "Secure web traffic"]
+      ]
+    }
+  ]
+}

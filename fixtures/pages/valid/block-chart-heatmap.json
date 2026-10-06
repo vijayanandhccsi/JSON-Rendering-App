@@ -1,0 +1,20 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "heatmap",
+      "title": "Sample heatmap chart",
+      "description": "Shows sample data for a heatmap chart.",
+      "note": "Illustrative values",
+      "xLabels": ["Mon", "Tue", "Wed"],
+      "yLabels": ["Low", "High"],
+      "values": [
+        [1, 2, 3],
+        [4, 5, 6]
+      ]
+    }
+  ]
+}

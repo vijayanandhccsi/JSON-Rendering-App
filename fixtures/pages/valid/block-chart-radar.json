@@ -1,0 +1,25 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "radar",
+      "title": "Sample radar chart",
+      "description": "Shows sample data for a radar chart.",
+      "note": "Illustrative values",
+      "labels": ["Speed", "Cost", "Safety", "Reach"],
+      "series": [
+        {
+          "name": "Option A",
+          "values": [4, 3, 5, 2]
+        },
+        {
+          "name": "Option B",
+          "values": [2, 5, 3, 4]
+        }
+      ]
+    }
+  ]
+}

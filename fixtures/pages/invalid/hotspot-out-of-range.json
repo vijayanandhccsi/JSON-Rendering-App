@@ -1,0 +1,29 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "hotspot",
+      "image": {
+        "src": "network-topology.webp",
+        "alt": "Office network",
+        "description": "A router connected to a firewall, a switch, and two servers."
+      },
+      "hotspots": [
+        {
+          "x": 120,
+          "y": 40,
+          "title": "Firewall",
+          "text": "Out of range."
+        }
+      ]
+    }
+  ],
+  "imageBriefs": [
+    {
+      "file": "network-topology.webp",
+      "brief": "Image for network-topology.webp."
+    }
+  ]
+}

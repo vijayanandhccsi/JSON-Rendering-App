@@ -1,0 +1,19 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "gauge",
+      "title": "Sample gauge chart",
+      "description": "Shows sample data for a gauge chart.",
+      "note": "Illustrative values",
+      "value": 72,
+      "min": 0,
+      "max": 100,
+      "label": "Patch compliance",
+      "unit": "%"
+    }
+  ]
+}

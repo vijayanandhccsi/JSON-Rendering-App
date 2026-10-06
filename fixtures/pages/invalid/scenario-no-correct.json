@@ -1,0 +1,25 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "scenario",
+      "title": "Suspicious login",
+      "situation": "You see a login to an admin account at 3 a.m. from an unfamiliar country.",
+      "question": "What do you do first?",
+      "options": [
+        {
+          "text": "Ignore it until morning",
+          "correct": false,
+          "feedback": "A possible compromise needs a prompt response."
+        },
+        {
+          "text": "Follow the incident response plan and investigate",
+          "correct": false,
+          "feedback": "Correct. Start the documented process."
+        }
+      ]
+    }
+  ]
+}

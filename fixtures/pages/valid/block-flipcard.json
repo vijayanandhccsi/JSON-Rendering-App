@@ -1,0 +1,16 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "flipcard",
+      "cards": [
+        {
+          "front": "SIEM",
+          "back": "Collects and correlates logs from many sources to detect threats."
+        }
+      ]
+    }
+  ]
+}

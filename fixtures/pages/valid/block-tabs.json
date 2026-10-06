@@ -1,0 +1,32 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "tabs",
+      "tabs": [
+        {
+          "label": "Windows",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "powershell",
+              "code": "ipconfig /all"
+            }
+          ]
+        },
+        {
+          "label": "Linux",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "bash",
+              "code": "ip addr"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "carousel",
+      "slides": [
+        {
+          "title": "Step 1: Open the console",
+          "text": "Sign in and open the dashboard.",
+          "image": {
+            "src": "console-step-1.webp",
+            "alt": "Console home",
+            "description": "The cloud console home page with the main menu on the left."
+          }
+        },
+        {
+          "text": "A text-only slide."
+        }
+      ]
+    }
+  ],
+  "imageBriefs": [
+    {
+      "file": "console-step-1.webp",
+      "brief": "Image for console-step-1.webp."
+    }
+  ]
+}

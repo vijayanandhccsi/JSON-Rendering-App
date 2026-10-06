@@ -1,0 +1,32 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "sankey",
+      "title": "Sample sankey chart",
+      "description": "Shows sample data for a sankey chart.",
+      "note": "Illustrative values",
+      "nodes": ["Internet", "Firewall", "Allowed", "Blocked"],
+      "links": [
+        {
+          "source": "Internet",
+          "target": "Firewall",
+          "value": 10
+        },
+        {
+          "source": "Firewall",
+          "target": "Allowed",
+          "value": 7
+        },
+        {
+          "source": "Firewall",
+          "target": "Blocked",
+          "value": 3
+        }
+      ]
+    }
+  ]
+}

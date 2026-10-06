@@ -1,0 +1,26 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "layout",
+      "variant": "masonry",
+      "tiles": [
+        {
+          "title": "Identify",
+          "text": "Know your assets."
+        },
+        {
+          "title": "Protect",
+          "text": "Apply controls.",
+          "icon": "shield"
+        },
+        {
+          "title": "Detect",
+          "text": "Watch for events."
+        }
+      ]
+    }
+  ]
+}

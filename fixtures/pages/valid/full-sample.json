@@ -1,0 +1,791 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Full sample page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "A **firewall** filters *network* traffic using `rules`."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is a firewall?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "A level 3 heading"
+    },
+    {
+      "type": "callout",
+      "variant": "tip",
+      "title": "Exam tip",
+      "text": "A stateful firewall tracks the state of connections."
+    },
+    {
+      "type": "quote",
+      "text": "Security is a process, not a product.",
+      "source": "Bruce Schneier"
+    },
+    {
+      "type": "list",
+      "style": "bulleted",
+      "items": ["Firewalls", "Routers", "Switches"]
+    },
+    {
+      "type": "list",
+      "style": "numbered",
+      "items": ["Identify the asset", "Assess the risk", "Apply a control"]
+    },
+    {
+      "type": "list",
+      "style": "checklist",
+      "items": ["Filter traffic", "Track connections"]
+    },
+    {
+      "type": "list",
+      "style": "icon",
+      "iconPosition": "right",
+      "items": [
+        {
+          "icon": "lock",
+          "text": "Confidentiality keeps data private."
+        },
+        {
+          "icon": "shield-check",
+          "text": "Integrity keeps data accurate."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "osi-model-layers.webp",
+      "alt": "OSI model layers",
+      "description": "A stack of the seven OSI layers from Physical at the bottom to Application at the top.",
+      "caption": "The seven layers of the OSI model",
+      "size": "medium"
+    },
+    {
+      "type": "video",
+      "provider": "vimeo",
+      "id": "123456789",
+      "hash": "ab12cd34ef",
+      "title": "How DNS resolution works",
+      "caption": "Watch the full walkthrough."
+    },
+    {
+      "type": "code",
+      "language": "bash",
+      "title": "List listening ports",
+      "code": "ss -tuln"
+    },
+    {
+      "type": "terminal",
+      "title": "Ping a host",
+      "lines": [
+        {
+          "kind": "command",
+          "text": "ping -c 2 example.com"
+        },
+        {
+          "kind": "output",
+          "text": "2 packets transmitted, 2 received"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "items": [
+        {
+          "title": "What is NAT?",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "NAT translates private addresses to public ones."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tabs",
+      "tabs": [
+        {
+          "label": "Windows",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "powershell",
+              "code": "ipconfig /all"
+            }
+          ]
+        },
+        {
+          "label": "Linux",
+          "blocks": [
+            {
+              "type": "code",
+              "language": "bash",
+              "code": "ip addr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "expandable",
+      "title": "Go deeper: the TCP three-way handshake",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The client sends SYN, the server replies SYN-ACK, and the client sends ACK."
+        }
+      ]
+    },
+    {
+      "type": "flipcard",
+      "cards": [
+        {
+          "front": "SIEM",
+          "back": "Collects and correlates logs from many sources to detect threats."
+        }
+      ]
+    },
+    {
+      "type": "timeline",
+      "orientation": "vertical",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "Identify",
+          "text": "Detect that an incident has occurred."
+        },
+        {
+          "title": "Contain",
+          "text": "Limit the damage."
+        }
+      ]
+    },
+    {
+      "type": "timeline",
+      "orientation": "horizontal",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "Identify",
+          "text": "Detect that an incident has occurred."
+        },
+        {
+          "label": "Step 2",
+          "title": "Contain",
+          "text": "Limit the damage and stop it spreading."
+        }
+      ]
+    },
+    {
+      "type": "carousel",
+      "slides": [
+        {
+          "title": "Step 1: Open the console",
+          "text": "Sign in and open the dashboard.",
+          "image": {
+            "src": "console-step-1.webp",
+            "alt": "Console home",
+            "description": "The cloud console home page with the main menu on the left."
+          }
+        },
+        {
+          "text": "A text-only slide."
+        }
+      ]
+    },
+    {
+      "type": "hotspot",
+      "image": {
+        "src": "network-topology.webp",
+        "alt": "Office network",
+        "description": "A router connected to a firewall, a switch, and two servers."
+      },
+      "hotspots": [
+        {
+          "x": 30,
+          "y": 40,
+          "title": "Firewall",
+          "text": "Filters traffic between the internet and the internal network."
+        },
+        {
+          "x": 70,
+          "y": 60,
+          "title": "Switch",
+          "text": "Connects the servers."
+        }
+      ]
+    },
+    {
+      "type": "dragdrop",
+      "mode": "match",
+      "prompt": "Match each protocol to its port.",
+      "hint": "Think about well-known ports.",
+      "pairs": [
+        {
+          "left": "HTTPS",
+          "right": "443"
+        },
+        {
+          "left": "SSH",
+          "right": "22"
+        }
+      ]
+    },
+    {
+      "type": "dragdrop",
+      "mode": "order",
+      "prompt": "Put the incident response phases in order.",
+      "items": ["Preparation", "Detection", "Containment", "Eradication", "Recovery"]
+    },
+    {
+      "type": "dragdrop",
+      "mode": "label",
+      "prompt": "Place each label on the diagram.",
+      "image": {
+        "src": "lab-topology.webp",
+        "alt": "Lab network",
+        "description": "A router, firewall, switch, and server."
+      },
+      "labels": [
+        {
+          "text": "Firewall",
+          "x": 30,
+          "y": 40
+        },
+        {
+          "text": "Server",
+          "x": 80,
+          "y": 70
+        }
+      ]
+    },
+    {
+      "type": "beforeafter",
+      "before": {
+        "src": "acl-wrong.webp",
+        "alt": "Misconfigured ACL",
+        "description": "An access list that allows all traffic.",
+        "label": "Misconfigured"
+      },
+      "after": {
+        "src": "acl-correct.webp",
+        "alt": "Correct ACL",
+        "description": "An access list that permits only required traffic.",
+        "label": "Correct"
+      }
+    },
+    {
+      "type": "kanban",
+      "columns": [
+        {
+          "title": "Learned",
+          "cards": [
+            {
+              "title": "IP addressing",
+              "text": "Addresses and masks"
+            }
+          ]
+        },
+        {
+          "title": "Practicing",
+          "cards": [
+            {
+              "title": "Subnetting"
+            }
+          ]
+        },
+        {
+          "title": "Mastered",
+          "cards": []
+        }
+      ]
+    },
+    {
+      "type": "timer",
+      "mode": "countdown",
+      "seconds": 300,
+      "label": "Lab time",
+      "message": "Time is up. Review your answers."
+    },
+    {
+      "type": "timer",
+      "mode": "timer",
+      "label": "Practice run"
+    },
+    {
+      "type": "comparison",
+      "left": {
+        "title": "TCP",
+        "points": ["Connection-oriented", "Reliable delivery"]
+      },
+      "right": {
+        "title": "UDP",
+        "points": ["Connectionless", "Faster, no delivery guarantee"]
+      }
+    },
+    {
+      "type": "scenario",
+      "title": "Suspicious login",
+      "situation": "You see a login to an admin account at 3 a.m. from an unfamiliar country.",
+      "question": "What do you do first?",
+      "options": [
+        {
+          "text": "Ignore it until morning",
+          "correct": false,
+          "feedback": "A possible compromise needs a prompt response."
+        },
+        {
+          "text": "Follow the incident response plan and investigate",
+          "correct": true,
+          "feedback": "Correct. Start the documented process."
+        }
+      ]
+    },
+    {
+      "type": "smartsheet",
+      "title": "Common ports",
+      "headers": ["Port", "Protocol", "Use"],
+      "rows": [
+        ["22", "SSH", "Secure remote login"],
+        ["443", "HTTPS", "Secure web traffic"]
+      ]
+    },
+    {
+      "type": "grid",
+      "variant": "feature",
+      "columns": 3,
+      "items": [
+        {
+          "icon": "lock",
+          "title": "Confidentiality",
+          "text": "Only authorized people can read data."
+        },
+        {
+          "icon": "shield-check",
+          "title": "Integrity",
+          "text": "Data is not changed without permission."
+        },
+        {
+          "icon": "server",
+          "title": "Availability",
+          "text": "Systems are reachable when needed."
+        }
+      ]
+    },
+    {
+      "type": "grid",
+      "variant": "comparison",
+      "columns": 2,
+      "items": [
+        {
+          "badge": "Faster",
+          "title": "UDP",
+          "text": "No delivery guarantee."
+        },
+        {
+          "title": "TCP",
+          "text": "Reliable delivery."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "variant": "highlight",
+      "icon": "shield",
+      "title": "Defense in depth",
+      "text": "Use several layers of control so one failure does not expose everything."
+    },
+    {
+      "type": "layout",
+      "variant": "bento",
+      "tiles": [
+        {
+          "title": "Identify",
+          "text": "Know your assets.",
+          "size": "large",
+          "tone": "primary"
+        },
+        {
+          "title": "Protect",
+          "text": "Apply controls.",
+          "size": "small"
+        },
+        {
+          "title": "Detect",
+          "text": "Watch for events.",
+          "size": "small"
+        }
+      ]
+    },
+    {
+      "type": "layout",
+      "variant": "masonry",
+      "tiles": [
+        {
+          "title": "Identify",
+          "text": "Know your assets."
+        },
+        {
+          "title": "Protect",
+          "text": "Apply controls.",
+          "icon": "shield"
+        },
+        {
+          "title": "Detect",
+          "text": "Watch for events."
+        }
+      ]
+    },
+    {
+      "type": "layout",
+      "variant": "metro",
+      "tiles": [
+        {
+          "title": "Identify",
+          "tone": "secondary",
+          "size": "wide"
+        },
+        {
+          "title": "Protect",
+          "tone": "accent"
+        },
+        {
+          "title": "Detect"
+        }
+      ]
+    },
+    {
+      "type": "layout",
+      "variant": "modular",
+      "tiles": [
+        {
+          "title": "Identify",
+          "size": "large",
+          "tone": "primary"
+        },
+        {
+          "title": "Protect",
+          "size": "tall",
+          "tone": "secondary"
+        },
+        {
+          "title": "Detect",
+          "size": "wide",
+          "tone": "accent"
+        },
+        {
+          "title": "Respond",
+          "size": "small"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "bar",
+      "title": "Sample bar chart",
+      "description": "Shows sample data for a bar chart.",
+      "note": "Illustrative values",
+      "labels": ["SSH", "HTTP", "HTTPS", "RDP"],
+      "series": [
+        {
+          "name": "Port",
+          "values": [22, 80, 443, 3389]
+        }
+      ],
+      "yAxisLabel": "Port number"
+    },
+    {
+      "type": "chart",
+      "chartType": "line",
+      "title": "Sample line chart",
+      "description": "Shows sample data for a line chart.",
+      "note": "Illustrative values",
+      "labels": ["Mon", "Tue", "Wed"],
+      "series": [
+        {
+          "name": "Series",
+          "values": [3, 5, 4]
+        }
+      ],
+      "xAxisLabel": "Day",
+      "yAxisLabel": "Alerts"
+    },
+    {
+      "type": "chart",
+      "chartType": "pie",
+      "title": "Sample pie chart",
+      "description": "Shows sample data for a pie chart.",
+      "note": "Illustrative values",
+      "labels": ["A", "B", "C"],
+      "series": [
+        {
+          "name": "Share",
+          "values": [40, 35, 25]
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "donut",
+      "title": "Sample donut chart",
+      "description": "Shows sample data for a donut chart.",
+      "note": "Illustrative values",
+      "labels": ["Domain A", "Domain B", "Domain C"],
+      "series": [
+        {
+          "name": "Weight",
+          "values": [40, 35, 25]
+        }
+      ],
+      "unit": "%"
+    },
+    {
+      "type": "chart",
+      "chartType": "stacked-bar",
+      "title": "Sample stacked-bar chart",
+      "description": "Shows sample data for a stacked-bar chart.",
+      "note": "Illustrative values",
+      "labels": ["Q1", "Q2"],
+      "series": [
+        {
+          "name": "Low",
+          "values": [4, 6]
+        },
+        {
+          "name": "High",
+          "values": [2, 1]
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "stacked-area",
+      "title": "Sample stacked-area chart",
+      "description": "Shows sample data for a stacked-area chart.",
+      "note": "Illustrative values",
+      "labels": ["Q1", "Q2", "Q3"],
+      "series": [
+        {
+          "name": "Low",
+          "values": [4, 6, 5]
+        },
+        {
+          "name": "High",
+          "values": [2, 1, 3]
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "radar",
+      "title": "Sample radar chart",
+      "description": "Shows sample data for a radar chart.",
+      "note": "Illustrative values",
+      "labels": ["Speed", "Cost", "Safety", "Reach"],
+      "series": [
+        {
+          "name": "Option A",
+          "values": [4, 3, 5, 2]
+        },
+        {
+          "name": "Option B",
+          "values": [2, 5, 3, 4]
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "scatter",
+      "title": "Sample scatter chart",
+      "description": "Shows sample data for a scatter chart.",
+      "note": "Illustrative values",
+      "series": [
+        {
+          "name": "Hosts",
+          "points": [
+            {
+              "x": 1,
+              "y": 2
+            },
+            {
+              "x": 2,
+              "y": 4
+            },
+            {
+              "x": 3,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "xAxisLabel": "Latency",
+      "yAxisLabel": "Loss"
+    },
+    {
+      "type": "chart",
+      "chartType": "bubble",
+      "title": "Sample bubble chart",
+      "description": "Shows sample data for a bubble chart.",
+      "note": "Illustrative values",
+      "series": [
+        {
+          "name": "Hosts",
+          "points": [
+            {
+              "x": 1,
+              "y": 2,
+              "size": 10
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "size": 25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "heatmap",
+      "title": "Sample heatmap chart",
+      "description": "Shows sample data for a heatmap chart.",
+      "note": "Illustrative values",
+      "xLabels": ["Mon", "Tue", "Wed"],
+      "yLabels": ["Low", "High"],
+      "values": [
+        [1, 2, 3],
+        [4, 5, 6]
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "gantt",
+      "title": "Sample gantt chart",
+      "description": "Shows sample data for a gantt chart.",
+      "note": "Illustrative values",
+      "tasks": [
+        {
+          "label": "Networking basics",
+          "start": "2026-11-02",
+          "end": "2026-11-08"
+        },
+        {
+          "label": "Security concepts",
+          "start": "2026-11-09",
+          "end": "2026-11-15"
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "sankey",
+      "title": "Sample sankey chart",
+      "description": "Shows sample data for a sankey chart.",
+      "note": "Illustrative values",
+      "nodes": ["Internet", "Firewall", "Allowed", "Blocked"],
+      "links": [
+        {
+          "source": "Internet",
+          "target": "Firewall",
+          "value": 10
+        },
+        {
+          "source": "Firewall",
+          "target": "Allowed",
+          "value": 7
+        },
+        {
+          "source": "Firewall",
+          "target": "Blocked",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "gauge",
+      "title": "Sample gauge chart",
+      "description": "Shows sample data for a gauge chart.",
+      "note": "Illustrative values",
+      "value": 72,
+      "min": 0,
+      "max": 100,
+      "label": "Patch compliance",
+      "unit": "%"
+    },
+    {
+      "type": "chart",
+      "chartType": "treemap",
+      "title": "Sample treemap chart",
+      "description": "Shows sample data for a treemap chart.",
+      "note": "Illustrative values",
+      "labels": ["Web", "Mail", "DNS"],
+      "series": [
+        {
+          "name": "Traffic",
+          "values": [50, 30, 20]
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "chartType": "funnel",
+      "title": "Sample funnel chart",
+      "description": "Shows sample data for a funnel chart.",
+      "note": "Illustrative values",
+      "labels": ["Alerts", "Triaged", "Incidents"],
+      "series": [
+        {
+          "name": "Count",
+          "values": [100, 40, 5]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key takeaways"
+    },
+    {
+      "type": "list",
+      "style": "checklist",
+      "items": ["Every block renders", "Every block validates"]
+    }
+  ],
+  "estimatedMinutes": 20,
+  "imageBriefs": [
+    {
+      "file": "osi-model-layers.webp",
+      "brief": "Image for osi-model-layers.webp."
+    },
+    {
+      "file": "console-step-1.webp",
+      "brief": "Image for console-step-1.webp."
+    },
+    {
+      "file": "network-topology.webp",
+      "brief": "Image for network-topology.webp."
+    },
+    {
+      "file": "lab-topology.webp",
+      "brief": "Image for lab-topology.webp."
+    },
+    {
+      "file": "acl-wrong.webp",
+      "brief": "Image for acl-wrong.webp."
+    },
+    {
+      "file": "acl-correct.webp",
+      "brief": "Image for acl-correct.webp."
+    }
+  ],
+  "authorNotes": ["Uses every block type at least once."]
+}

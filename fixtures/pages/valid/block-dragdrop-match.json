@@ -1,0 +1,23 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "dragdrop",
+      "mode": "match",
+      "prompt": "Match each protocol to its port.",
+      "hint": "Think about well-known ports.",
+      "pairs": [
+        {
+          "left": "HTTPS",
+          "right": "443"
+        },
+        {
+          "left": "SSH",
+          "right": "22"
+        }
+      ]
+    }
+  ]
+}

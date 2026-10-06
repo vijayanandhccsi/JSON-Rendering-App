@@ -1,0 +1,29 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "grid",
+      "variant": "feature",
+      "columns": 3,
+      "items": [
+        {
+          "icon": "lock",
+          "title": "Confidentiality",
+          "text": "Only authorized people can read data."
+        },
+        {
+          "icon": "shield-check",
+          "title": "Integrity",
+          "text": "Data is not changed without permission."
+        },
+        {
+          "icon": "server",
+          "title": "Availability",
+          "text": "Systems are reachable when needed."
+        }
+      ]
+    }
+  ]
+}

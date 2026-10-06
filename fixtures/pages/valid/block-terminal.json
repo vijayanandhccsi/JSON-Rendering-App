@@ -1,0 +1,21 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "terminal",
+      "title": "Ping a host",
+      "lines": [
+        {
+          "kind": "command",
+          "text": "ping -c 2 example.com"
+        },
+        {
+          "kind": "output",
+          "text": "2 packets transmitted, 2 received"
+        }
+      ]
+    }
+  ]
+}

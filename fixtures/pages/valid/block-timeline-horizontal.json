@@ -1,0 +1,23 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "timeline",
+      "orientation": "horizontal",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "Identify",
+          "text": "Detect that an incident has occurred."
+        },
+        {
+          "label": "Step 2",
+          "title": "Contain",
+          "text": "Limit the damage and stop it spreading."
+        }
+      ]
+    }
+  ]
+}

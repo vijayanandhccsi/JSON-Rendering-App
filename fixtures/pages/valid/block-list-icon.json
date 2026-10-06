@@ -1,0 +1,22 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "list",
+      "style": "icon",
+      "iconPosition": "right",
+      "items": [
+        {
+          "icon": "lock",
+          "text": "Confidentiality keeps data private."
+        },
+        {
+          "icon": "shield-check",
+          "text": "Integrity keeps data accurate."
+        }
+      ]
+    }
+  ]
+}

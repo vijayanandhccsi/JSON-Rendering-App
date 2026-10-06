@@ -1,0 +1,22 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "donut",
+      "title": "Sample donut chart",
+      "description": "Shows sample data for a donut chart.",
+      "note": "Illustrative values",
+      "labels": ["Domain A", "Domain B", "Domain C"],
+      "series": [
+        {
+          "name": "Weight",
+          "values": [40, 35, 25]
+        }
+      ],
+      "unit": "%"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "video",
+      "provider": "youtube",
+      "id": "123456789",
+      "hash": "ab12cd34ef",
+      "title": "How DNS resolution works",
+      "caption": "Watch the full walkthrough."
+    }
+  ]
+}

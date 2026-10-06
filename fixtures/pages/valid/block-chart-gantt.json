@@ -1,0 +1,26 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "gantt",
+      "title": "Sample gantt chart",
+      "description": "Shows sample data for a gantt chart.",
+      "note": "Illustrative values",
+      "tasks": [
+        {
+          "label": "Networking basics",
+          "start": "2026-11-02",
+          "end": "2026-11-08"
+        },
+        {
+          "label": "Security concepts",
+          "start": "2026-11-09",
+          "end": "2026-11-15"
+        }
+      ]
+    }
+  ]
+}

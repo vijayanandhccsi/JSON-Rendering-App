@@ -1,0 +1,30 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "dragdrop",
+      "mode": "label",
+      "prompt": "Place each label on the diagram.",
+      "image": {
+        "src": "lab-topology.webp",
+        "alt": "Lab network",
+        "description": "A router, firewall, switch, and server."
+      },
+      "labels": [
+        {
+          "text": "Firewall",
+          "x": 30,
+          "y": -5
+        }
+      ]
+    }
+  ],
+  "imageBriefs": [
+    {
+      "file": "lab-topology.webp",
+      "brief": "Image for lab-topology.webp."
+    }
+  ]
+}

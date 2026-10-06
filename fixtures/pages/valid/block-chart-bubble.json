@@ -1,0 +1,31 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "chart",
+      "chartType": "bubble",
+      "title": "Sample bubble chart",
+      "description": "Shows sample data for a bubble chart.",
+      "note": "Illustrative values",
+      "series": [
+        {
+          "name": "Hosts",
+          "points": [
+            {
+              "x": 1,
+              "y": 2,
+              "size": 10
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "size": 25
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

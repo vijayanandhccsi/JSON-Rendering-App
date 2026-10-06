@@ -1,0 +1,20 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "image",
+      "src": "osi-model-layers.webp",
+      "alt": "OSI model layers",
+      "caption": "The seven layers of the OSI model",
+      "size": "medium"
+    }
+  ],
+  "imageBriefs": [
+    {
+      "file": "osi-model-layers.webp",
+      "brief": "Image for osi-model-layers.webp."
+    }
+  ]
+}

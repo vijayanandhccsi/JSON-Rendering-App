@@ -1,0 +1,14 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "card",
+      "variant": "highlight",
+      "icon": "shield-chek",
+      "title": "Defense in depth",
+      "text": "Use several layers of control so one failure does not expose everything."
+    }
+  ]
+}

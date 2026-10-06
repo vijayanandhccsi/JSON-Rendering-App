@@ -1,0 +1,13 @@
+{
+  "chapter": "network-security-basics",
+  "title": "Fixture page",
+  "summary": "A page used to test the validator and the block components.",
+  "blocks": [
+    {
+      "type": "dragdrop",
+      "mode": "sort",
+      "prompt": "Sort these.",
+      "items": ["a", "b"]
+    }
+  ]
+}
