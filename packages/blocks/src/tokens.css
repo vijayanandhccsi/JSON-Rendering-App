@@ -1,0 +1,89 @@
+/* Design tokens. Source: docs/DESIGN.md section 2. Change values here and nowhere else. */
+
+@font-face {
+  font-family: "Overused Grotesk";
+  src: url("./fonts/OverusedGrotesk-VF.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-primary: #e8570a;
+  --color-primary-hover: #cf4d08;
+  --color-primary-tint: #fdebdd;
+  --color-bg: #faf9f5;
+  --color-surface: #ffffff;
+  --color-border: #e6e2d8;
+  --color-ink: #07111f;
+  --color-ink-muted: #5b6470;
+  --color-success: #00a86b;
+  --color-success-tint: #e1f6ec;
+  --color-info-tint: #e8edf4;
+  --color-warning: #b45309;
+  --color-warning-tint: #fef3c7;
+  --color-danger: #b42318;
+  --color-danger-tint: #fdecea;
+
+  --font-sans: "Overused Grotesk", system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --text-title: 36px;
+  --text-title--line-height: 44px;
+  --text-h2: 28px;
+  --text-h2--line-height: 36px;
+  --text-h3: 22px;
+  --text-h3--line-height: 30px;
+  --text-h4: 18px;
+  --text-h4--line-height: 26px;
+  --text-body: 16px;
+  --text-body--line-height: 26px;
+  --text-small: 14px;
+  --text-small--line-height: 22px;
+  --text-caption: 13px;
+  --text-caption--line-height: 20px;
+
+  --spacing: 4px;
+
+  --radius-card: 12px;
+  --radius-control: 8px;
+  --radius-pill: 999px;
+
+  --shadow-raised: 0 1px 2px rgb(7 17 31 / 0.06);
+
+  --container-reading: 720px;
+  --container-wide: 960px;
+
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+:root {
+  --block-gap: 24px;
+  --focus-ring: 2px solid var(--color-primary);
+  --focus-offset: 2px;
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-flip: 400ms;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

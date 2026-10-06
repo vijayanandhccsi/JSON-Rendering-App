@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "@certkraft/blocks/tokens.css";
+@source "../../../packages/blocks/src";
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
