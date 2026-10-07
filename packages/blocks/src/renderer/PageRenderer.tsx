@@ -3,7 +3,7 @@ import { MediaProvider } from "../ui/MediaContext";
 import { BlockRenderer } from "./BlockRenderer";
 
 /** Blocks that may use the wide column (960 px). Everything else sits in the reading column (720 px). */
-function isWide(block: Block): boolean {
+export function isWideBlock(block: Block): boolean {
   switch (block.type) {
     case "chart":
     case "layout":
@@ -38,7 +38,7 @@ export function PageRenderer({ page, mediaBaseUrl = "/media/" }: PageRendererPro
           {page.blocks.map((block, index) => (
             <div
               key={index}
-              className={`mx-auto w-full ${isWide(block) ? "max-w-wide" : "max-w-reading"}`}
+              className={`mx-auto w-full ${isWideBlock(block) ? "max-w-wide" : "max-w-reading"}`}
             >
               <BlockRenderer block={block} />
             </div>

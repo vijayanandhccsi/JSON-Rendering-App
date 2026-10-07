@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
 // jsdom has no layout engine or matchMedia. These stubs let the carousel (Embla) start.
@@ -38,3 +39,8 @@ Range.prototype.getBoundingClientRect ??= () => emptyRect as DOMRect;
 Range.prototype.getClientRects ??= () =>
   ({ length: 0, item: () => null, [Symbol.iterator]: function* () {} }) as unknown as DOMRectList;
 document.elementFromPoint ??= () => null;
+
+// ECharts needs a real browser to draw. Tests use a stand-in that draws nothing.
+vi.mock("../../../packages/blocks/src/chart/echarts-setup", () => ({
+  init: () => ({ setOption: () => undefined, resize: () => undefined, dispose: () => undefined }),
+}));

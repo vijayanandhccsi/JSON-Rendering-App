@@ -513,3 +513,38 @@ describe("layout", () => {
     expect(screen.getByRole("tab", { name: "JSON" })).toHaveAttribute("aria-selected", "true");
   });
 });
+
+describe("images and leaving the page", () => {
+  it("lists the images the page needs in an Images panel", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const withBriefs = JSON.stringify({
+      ...JSON.parse(validPage),
+      blocks: [{ type: "image", src: "osi.webp", alt: "OSI", description: "Layers." }],
+      imageBriefs: [{ file: "osi.webp", brief: "Seven stacked layers." }],
+    });
+    await paste(user, withBriefs);
+    const toggle = await screen.findByRole("button", { name: /^Images:/ });
+    await user.click(toggle);
+    expect(screen.getByRole("region", { name: "Images" })).toHaveTextContent("osi.webp");
+    expect(screen.getByRole("region", { name: "Images" })).toHaveTextContent(
+      "Seven stacked layers.",
+    );
+  });
+
+  it("saves the JSON straight away when the page is left, even within the autosave pause", async () => {
+    const user = userEvent.setup();
+    const { unmount } = render(<App />);
+    await paste(user, validPage);
+    unmount();
+    expect(localStorage.getItem(STORAGE_KEYS.json)).toBe(validPage);
+  });
+
+  it("saves the JSON when the browser tab is closed or hidden", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await paste(user, validPage);
+    window.dispatchEvent(new Event("pagehide"));
+    expect(localStorage.getItem(STORAGE_KEYS.json)).toBe(validPage);
+  });
+});
