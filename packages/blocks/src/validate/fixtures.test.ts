@@ -129,7 +129,7 @@ const expectations: Record<string, Expectation> = {
   "chart-wrong-data-for-type": error("blocks[0].series[0].points", "is required"),
   "warn-image-not-in-briefs": warning("blocks[0].src", "is not listed in"),
   "warn-brief-unused": warning("imageBriefs[0].file", "no image on the page uses it"),
-  "warn-imagebriefs-missing": warning("imageBriefs", "is missing"),
+  "imagebriefs-missing": error("imageBriefs", "is missing"),
   "warn-video-tbd": warning("blocks[0].id", '"TBD"'),
   "warn-paragraph-too-long": warning("blocks[0].text", "85 words"),
   "warn-unknown-icon": warning("blocks[0].icon", 'Did you mean "shield-check"'),
@@ -172,6 +172,15 @@ describe("invalid fixtures", () => {
     page.blocks.push(JSON.parse(read("invalid", "image-nested-missing-alt.json")).blocks[0]);
     const result = validateJsonText(JSON.stringify(page));
     expect(result.errors[0]).toMatchObject({ blockIndex: 1, blockType: "image" });
+  });
+
+  it("treats an empty imageBriefs list as missing when images are used", () => {
+    const page = JSON.parse(read("valid", "block-image.json")) as { imageBriefs: unknown[] };
+    page.imageBriefs = [];
+    const result = validateJsonText(JSON.stringify(page));
+    expect(result.valid).toBe(false);
+    expect(result.errors[0]).toMatchObject({ path: "imageBriefs", severity: "error" });
+    expect(result.errors[0]?.message).toContain("empty");
   });
 
   it("reports every problem in one pass, not just the first", () => {

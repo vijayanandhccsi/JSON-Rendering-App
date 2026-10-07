@@ -10,7 +10,8 @@
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "gen:icons": "pnpm --filter @certkraft/blocks gen:icons"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -174,7 +174,7 @@ Errors block download. Warnings do not.
 | Chart missing `description` | Error |
 | Paragraph over 80 words | Warning |
 | Icon name not found in Lucide | Warning |
-| `imageBriefs` missing when images are used | Warning |
+| `imageBriefs` missing or empty when images are used | Error |
 
 Every error message must say what is wrong and how to fix it, in plain English, so it can be pasted straight back to the AI.
 

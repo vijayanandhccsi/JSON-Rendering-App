@@ -102,9 +102,12 @@ function iconsIn(block: Record<string, unknown>, path: PathSegment[]): Found[] {
   return found;
 }
 
-/** Problems that do not stop a page from working but should be looked at. */
-export function collectWarnings(page: Record<string, unknown>): ValidationIssue[] {
-  const warnings: ValidationIssue[] = [];
+/**
+ * Checks that look across the whole page. Most are warnings (problems that do not stop the page
+ * from working); a page that uses images without "imageBriefs" is an error.
+ */
+export function collectPageChecks(page: Record<string, unknown>): ValidationIssue[] {
+  const checks: ValidationIssue[] = [];
   const warn = (
     blockIndex: number | null,
     blockType: string | null,
@@ -112,7 +115,7 @@ export function collectWarnings(page: Record<string, unknown>): ValidationIssue[
     message: string,
     fix: string,
   ) =>
-    warnings.push({
+    checks.push({
       severity: "warning",
       blockIndex,
       blockType,
@@ -176,13 +179,14 @@ export function collectWarnings(page: Record<string, unknown>): ValidationIssue[
   });
 
   if (images.length > 0 && (briefs === undefined || briefs.length === 0)) {
-    warn(
-      null,
-      null,
-      ["imageBriefs"],
-      '"imageBriefs" is missing, but the page uses images.',
-      'Add "imageBriefs" with one { "file", "brief" } entry for each image file.',
-    );
+    checks.push({
+      severity: "error",
+      blockIndex: null,
+      blockType: null,
+      path: "imageBriefs",
+      message: `"imageBriefs" is ${briefs === undefined ? "missing" : "empty"}, but the page uses images.`,
+      fix: 'Add "imageBriefs" with one { "file", "brief" } entry for each image file used on the page.',
+    });
   } else if (briefs !== undefined) {
     const used = new Set(images.map((image) => image.value));
     for (const image of images) {
@@ -209,5 +213,5 @@ export function collectWarnings(page: Record<string, unknown>): ValidationIssue[
     }
   }
 
-  return warnings;
+  return checks;
 }

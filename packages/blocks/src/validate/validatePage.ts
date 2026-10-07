@@ -9,7 +9,7 @@ import {
 } from "../schema";
 import type { BlockType } from "../schema";
 import type { ValidationIssue, ValidationResult } from "./types";
-import { collectWarnings } from "./warnings";
+import { collectPageChecks } from "./warnings";
 import { closestMatch, describeValue, isRecord, pathToString, quoteList } from "./util";
 import type { PathSegment } from "./util";
 import { describeZodIssue } from "./zodIssues";
@@ -186,6 +186,8 @@ export function validatePage(input: unknown): ValidationResult {
     input.blocks.forEach((block, i) => validateBlock(block, ["blocks", i], i, false, issues));
   }
 
-  const warnings = collectWarnings(input);
-  return { valid: issues.length === 0, errors: issues, warnings };
+  const checks = collectPageChecks(input);
+  const errors = [...issues, ...checks.filter((issue) => issue.severity === "error")];
+  const warnings = checks.filter((issue) => issue.severity === "warning");
+  return { valid: errors.length === 0, errors, warnings };
 }
