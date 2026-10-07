@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@certkraft/blocks": ["../../packages/blocks/dist/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*"]
+}
