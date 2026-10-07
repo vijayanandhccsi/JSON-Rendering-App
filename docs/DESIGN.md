@@ -186,7 +186,7 @@ The page title uses the page title style. When the page has `estimatedMinutes`, 
 ### Chart
 | Block | Look |
 | --- | --- |
-| chart | Card with title, optional note in caption style ("Illustrative values"), chart area, and a visually hidden data table or description for screen readers. ECharts theme built from tokens: primary, navy, emerald (the brand colors; chart fills are not text, and labels and legends stay `ink`), then tints; thin gridlines in `--color-border`; no 3D, no heavy shadows. Always label axes and units when given. |
+| chart | Card with title, optional note in caption style ("Illustrative values"), chart area, and a visually hidden data table or description for screen readers. ECharts theme built from tokens: primary, navy, emerald (the brand colors; chart fills are not text, and labels and legends stay `ink`), then tints; thin gridlines in `--color-border`; no 3D, no heavy shadows. Always label axes and units when given. Chart text is always `ink`. Treemap boxes use the light tints so their labels stay readable, the heatmap uses stepped color bands instead of a smooth gradient, and funnel, pie and sankey labels sit outside the shapes. If the data does not match the chart type, or drawing fails, the card shows an error that says what is wrong and how to fix it, never a blank box. The chart colors come from the `--chart-*` tokens in `tokens.css`. |
 
 ## 5. Icons
 

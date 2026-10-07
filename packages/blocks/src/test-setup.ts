@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import "vitest-axe/extend-expect";
 import * as axeMatchers from "vitest-axe/matchers";
+import { vi } from "vitest";
 
 expect.extend(axeMatchers);
 
@@ -27,3 +28,9 @@ window.matchMedia ??= (query: string): MediaQueryList => ({
   removeListener: () => undefined,
   dispatchEvent: () => false,
 });
+
+// ECharts needs a real browser to draw. Tests use a stand-in that accepts the same calls and draws
+// nothing; tests that care about the calls replace it with their own spy.
+vi.mock("./chart/echarts-setup", () => ({
+  init: () => ({ setOption: () => undefined, resize: () => undefined, dispose: () => undefined }),
+}));

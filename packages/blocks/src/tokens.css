@@ -90,6 +90,19 @@
 }
 
 :root {
+  /* Chart colors and text, read by the chart theme (chart/tokens.ts). Data fills are not text. */
+  --chart-series-1: var(--color-primary);
+  --chart-series-2: var(--color-ink);
+  --chart-series-3: var(--color-success);
+  --chart-low: var(--color-primary-tint);
+  --chart-surface: var(--color-surface);
+  --chart-grid: var(--color-border);
+  --chart-text: var(--color-ink);
+  --chart-text-muted: var(--color-ink-muted);
+  --chart-font: var(--font-sans);
+  --chart-font-mono: var(--font-mono);
+  --chart-font-size: var(--text-caption);
+
   --block-gap: 24px;
   --focus-ring: 2px solid var(--color-primary);
   --focus-offset: 2px;

@@ -3,6 +3,7 @@ import { BeforeAfter } from "../blocks/BeforeAfter";
 import { Callout } from "../blocks/Callout";
 import { Card } from "../blocks/Card";
 import { Carousel } from "../blocks/Carousel";
+import { Chart } from "../blocks/Chart";
 import { Code } from "../blocks/Code";
 import { Comparison } from "../blocks/Comparison";
 import { DragDrop } from "../blocks/DragDrop";
@@ -82,8 +83,11 @@ export function BlockRenderer({ block }: { block: Block }) {
       return <Timer block={block} />;
     case "scenario":
       return <Scenario block={block} />;
+    case "chart":
+      return <Chart block={block} />;
     default:
-      return <Unsupported type={block.type} />;
+      // Every known type is handled above. This only runs if unvalidated data has an unknown type.
+      return <Unsupported type={String((block as { type?: unknown }).type)} />;
   }
 }
 

@@ -41,9 +41,15 @@ describe("PageRenderer", () => {
     expect(screen.getByRole("img")).toHaveAttribute("src", "/lesson-media/osi-model-layers.webp");
   });
 
-  it("shows a placeholder for blocks that cannot be previewed yet, instead of failing", () => {
-    render(<PageRenderer page={load("block-chart-bar.json")} />);
-    expect(screen.getByText(/valid but cannot be previewed yet/)).toBeVisible();
+  it("shows a notice instead of failing when a block has an unknown type", () => {
+    const page = load("block-paragraph.json");
+    const broken = {
+      ...page,
+      blocks: [{ type: "banner", text: "Hello" }],
+    } as unknown as typeof page;
+    render(<PageRenderer page={broken} />);
+    expect(screen.getByText(/is not a known block, so it cannot be shown/)).toBeVisible();
+    expect(screen.getByText("banner")).toBeInTheDocument();
   });
 
   it.each(readdirSync(valid))("renders %s without throwing", (file) => {

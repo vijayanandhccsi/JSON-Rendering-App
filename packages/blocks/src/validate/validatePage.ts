@@ -168,6 +168,13 @@ function validateBlock(
   }
 }
 
+/** The errors in one block, checked the same way as on a page. Paths are relative to the block. */
+export function validateBlockValue(block: unknown): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  validateBlock(block, [], 0, false, issues);
+  return issues;
+}
+
 /** Checks a page against every rule in the schema. Errors block download; warnings do not. */
 export function validatePage(input: unknown): ValidationResult {
   const issues: ValidationIssue[] = [];
