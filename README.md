@@ -73,7 +73,7 @@ CLAUDE.md              instructions for Claude Code
 
 ## Deploying
 
-Follow [docs/DEPLOY.md](docs/DEPLOY.md). In short: build the app, serve the files with Nginx behind a password and HTTPS, and run `./deploy.sh` on the server after each change. `deploy/nginx-preview.conf` is the site config, and a test keeps it identical to the one in `DEPLOY.md`. Image files for previewing go in `/var/www/preview/media/` on the server.
+Follow [docs/DEPLOY.md](docs/DEPLOY.md). In short: build the app, serve the files with Nginx over HTTPS (the app has no sign-in), and run `./deploy.sh` on the server after each change. `deploy/nginx-preview.conf` is the site config, and a test keeps it identical to the one in `DEPLOY.md`. Image files for previewing go in `/var/www/preview/media/` on the server.
 
 ## Reusing the blocks in the LMS (Project 2)
 

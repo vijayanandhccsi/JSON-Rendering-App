@@ -27,7 +27,7 @@ The app exists to:
 - Image checklist built from `imageBriefs`.
 - Block gallery route showing every block with sample data.
 - Batch validation of many `.json` files at once.
-- Deployment to the Bluehost VPS behind a password.
+- Deployment to the Bluehost VPS (no sign-in; search engines are blocked).
 
 **Out of scope**
 - Login, users, database, or any server code.
@@ -238,7 +238,7 @@ Build in this order. Finish and verify each milestone before the next.
 - Accept when: 20 files validated in one drop with a correct pass/fail table.
 
 **M8. Deploy and hand-off**
-- Deploy to the VPS following `DEPLOY.md`, behind a password.
+- Deploy to the VPS following `DEPLOY.md`.
 - Write a short README: how to use the app and how Project 2 will import the package.
 - Accept when: the live site works from a phone and a laptop, and `@certkraft/blocks` builds cleanly on its own.
 
@@ -268,7 +268,7 @@ No secrets are needed. The app has no backend.
 | Too many blocks delay the first usable version | Build in the M2 to M5 order and test pages as you go. |
 | Charts are the heaviest part | One ECharts wrapper with a small adapter per type; test each type with a fixture. |
 | The AI invents fields | The validator rejects unknown fields and says so. |
-| Public preview exposes unpublished lessons | Password protect the site and block search engines (see `DEPLOY.md`). |
+| Public preview exposes unpublished lessons | The app has no sign-in by decision. Pasted JSON never leaves the browser, so lessons are not exposed; only the app and any files in `media/` are public. Search engines are blocked (see `DEPLOY.md`), and a password can be added in Nginx. |
 | LMS styles differ from this app | `DESIGN.md` tokens come from the LMS `DESIGN.md`; the LMS file wins on any difference. |
 
 ## 14. Open decisions

@@ -18,8 +18,9 @@ describe("deployment files", () => {
     expect(conf).toContain(block as string);
   });
 
-  it("is protected: password, no search engines, no sniffing, and a referrer policy that works with Vimeo", () => {
-    expect(conf).toContain("auth_basic_user_file /etc/nginx/.htpasswd-preview;");
+  it("has no sign-in, keeps search engines away, stops sniffing, and has a referrer policy that works with Vimeo", () => {
+    expect(conf).not.toContain("auth_basic");
+    expect(guide.split("## 11.")[0]).not.toContain("auth_basic");
     expect(conf).toContain('X-Robots-Tag "noindex, nofollow"');
     expect(conf).toContain('X-Content-Type-Options "nosniff"');
     expect(conf).toContain('Referrer-Policy "strict-origin-when-cross-origin"');

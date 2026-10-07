@@ -85,18 +85,9 @@ pnpm build
 
 The build output is in `apps/preview/dist/`.
 
-## 6. Serve with Nginx behind a password
+## 6. Serve with Nginx
 
 Example domain: `preview.certkraft.com` (replace with your own). First add a DNS **A record** for it that points to the VPS IP address.
-
-Create the password file (either way, you are asked for the password):
-```
-sudo htpasswd -c /etc/nginx/.htpasswd-preview YOUR_USERNAME
-```
-or, without `htpasswd`:
-```
-printf 'YOUR_USERNAME:%s\n' "$(openssl passwd -apr1)" | sudo tee /etc/nginx/.htpasswd-preview >/dev/null
-```
 
 Copy the build to the web folder:
 ```
@@ -112,9 +103,6 @@ server {
 
     root /var/www/preview;
     index index.html;
-
-    auth_basic "Preview";
-    auth_basic_user_file /etc/nginx/.htpasswd-preview;
 
     add_header X-Robots-Tag "noindex, nofollow" always;
     add_header X-Content-Type-Options "nosniff" always;
@@ -146,7 +134,7 @@ sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d preview.certkraft.com
 ```
 
-Run certbot straight away: until it adds HTTPS, the password would travel unencrypted. Also add a `robots.txt` in the app's `public/` folder containing `User-agent: *` and `Disallow: /` (the repo already has one).
+Run certbot straight away so the site is on HTTPS. Also add a `robots.txt` in the app's `public/` folder containing `User-agent: *` and `Disallow: /` (the repo already has one).
 
 ## 7. Deploy script
 
@@ -173,7 +161,7 @@ Images for previewing go in `/var/www/preview/media/`. The `--exclude 'media/'` 
 
 ## 8. Checks after deploying
 
-1. Open `https://preview.certkraft.com`. It should ask for the password.
+1. Open `https://preview.certkraft.com`. The app should open straight away (there is no sign-in).
 2. Paste the sample page and confirm it renders.
 3. Open it on a phone.
 4. Confirm `https://preview.certkraft.com/robots.txt` disallows everything.
@@ -200,7 +188,23 @@ RewriteRule . /index.html [L]
 ## 10. Security notes
 
 - The app is client-side only. Pasted JSON never leaves the browser.
-- The password is the only protection for unpublished lessons. Use a strong one and keep the site on HTTPS.
+- The app has no sign-in. Anyone who knows the address can open it, so keep the address private. The robots file and the `X-Robots-Tag` header keep search engines away. Any image files in the `media/` folder are public too, so do not put unpublished images there if that matters.
+- To add a password later, see "Adding a password again" below.
 - Do not put secrets, API keys, or the media library's private files in this app.
 - Use SSH keys, turn off root login and password SSH once keys work, and keep the firewall on.
 - Back up the repository on GitHub. The server holds only build output and the media folder, so there is nothing else to back up.
+
+## 11. Adding a password again
+
+The site has no sign-in. If you want one, create a password file and add two lines to the `server` block in `/etc/nginx/sites-available/preview` (also to the HTTPS block that certbot adds):
+
+```
+printf 'YOUR_USERNAME:%s\n' "$(openssl passwd -apr1)" | sudo tee /etc/nginx/.htpasswd-preview >/dev/null
+sudo chown root:www-data /etc/nginx/.htpasswd-preview && sudo chmod 640 /etc/nginx/.htpasswd-preview
+```
+```
+    auth_basic "Preview";
+    auth_basic_user_file /etc/nginx/.htpasswd-preview;
+```
+
+Then `sudo nginx -t && sudo systemctl reload nginx`. The password is checked by Nginx only; the app itself has no login.
