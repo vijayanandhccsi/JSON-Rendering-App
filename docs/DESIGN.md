@@ -214,8 +214,9 @@ The app around the page is neutral so the page stays the focus.
 - **Header (56 px):** app name "CertKraft page preview" on the left; actions on the right: Paste, Upload, Copy, Download, Format, Sample, Clear. Primary button style (`primary-strong` fill, white text, `primary-strong-hover` on hover) only for Download.
 - **Toolbar under the header:** status chip (`success-strong` text on success tint with a check icon for "Valid", `danger` text on danger tint with an icon for "N errors, M warnings"), device width toggle (mobile, tablet, desktop as a segmented control), media base URL button.
 - **Split view:** editor left, preview right, 8 px draggable divider. The preview sits on the cream background and shows the page in a centered white device frame at the chosen width. The editor uses a light theme with mono font.
-- **Error panel:** collapsible panel under the editor. Rows: severity icon, block number and type, message, fix hint. Clicking a row selects that block in the editor.
+- **Error panel:** collapsible panel under the editor. Rows: severity icon, block number and type, message, fix hint. Clicking a row selects the problem in the editor (the exact value, or the block's `type` when a field is missing). A "Copy problems" button copies the whole list as text, ready to paste back to the AI.
 - **Page info panel:** a small card above the device frame, outside the page, showing the chapter, summary, estimated minutes and author notes, so the author can review them. Not part of the learner page.
+- **Preview while there are errors:** the preview keeps showing the last valid version, with a notice. If there has never been a valid version, it asks the author to fix the errors. The device frame is as wide as the chosen device; if the pane is narrower, the pane scrolls sideways.
 - **Empty state:** short instruction text and a "Load sample page" button.
 - **Responsive:** below 1024 px the split view becomes two tabs: JSON and Preview.
 - Copy for buttons and messages: sentence case, verb first, no exclamation marks.

@@ -21,10 +21,11 @@ describe("comparison", () => {
     expect(screen.getByText("vs")).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("stacks on small screens and sits side by side from the md breakpoint", () => {
+  it("stacks in a narrow column and sits side by side from the md container width", () => {
     const { container } = show(block);
-    expect(container.firstElementChild).toHaveClass("grid", "md:grid-cols-2");
-    expect(screen.getByText("vs")).toHaveClass("hidden", "md:block");
+    expect(container.firstElementChild).toHaveClass("@container");
+    expect(screen.getByRole("group")).toHaveClass("grid", "@md:grid-cols-2");
+    expect(screen.getByText("vs")).toHaveClass("hidden", "@md:block");
   });
 });
 

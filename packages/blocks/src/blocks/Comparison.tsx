@@ -31,20 +31,23 @@ function Column({ side, headerClassName }: { side: Side; headerClassName: string
 }
 
 export function Comparison({ block }: { block: BlockOf<"comparison"> }) {
+  // Container queries, not screen breakpoints: the layout follows the width of the page column.
   return (
-    <div
-      role="group"
-      aria-label={`${block.left.title} compared with ${block.right.title}`}
-      className="relative grid gap-4 md:grid-cols-2"
-    >
-      <Column side={block.left} headerClassName="bg-info-tint" />
-      <Column side={block.right} headerClassName="bg-primary-tint" />
-      <span
-        aria-hidden
-        className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 rounded-pill border border-border bg-surface px-3 py-1 text-small font-medium text-ink-muted md:block"
+    <div className="@container">
+      <div
+        role="group"
+        aria-label={`${block.left.title} compared with ${block.right.title}`}
+        className="relative grid gap-4 @md:grid-cols-2"
       >
-        vs
-      </span>
+        <Column side={block.left} headerClassName="bg-info-tint" />
+        <Column side={block.right} headerClassName="bg-primary-tint" />
+        <span
+          aria-hidden
+          className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 rounded-pill border border-border bg-surface px-3 py-1 text-small font-medium text-ink-muted @md:block"
+        >
+          vs
+        </span>
+      </div>
     </div>
   );
 }
