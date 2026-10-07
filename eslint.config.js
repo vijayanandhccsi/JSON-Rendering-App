@@ -10,6 +10,15 @@ export default tseslint.config(
   prettier,
   {
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
-    rules: { "@typescript-eslint/no-explicit-any": "error" },
+    rules: {
+      "@typescript-eslint/no-explicit-any": "error",
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+          message: "Never use dangerouslySetInnerHTML. Render text through <InlineText>.",
+        },
+      ],
+    },
   },
 );
