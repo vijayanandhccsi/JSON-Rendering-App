@@ -66,6 +66,8 @@
 
   --shadow-raised: 0 1px 2px rgb(7 17 31 / 0.06);
 
+  --size-flipcard-min: 220px;
+
   --container-reading: 720px;
   --container-wide: 960px;
 
@@ -101,4 +103,9 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Responsive grid of flip cards: as many columns as fit, each at least 220 px wide. */
+@utility grid-flipcards {
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-flipcard-min), 1fr));
 }
