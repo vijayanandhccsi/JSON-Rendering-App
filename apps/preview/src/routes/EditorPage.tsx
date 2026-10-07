@@ -75,7 +75,18 @@ export default function EditorPage() {
       window.removeEventListener("pagehide", save);
       save();
     };
-  }, [text]);
+  }, []);
+  // Listen for JSON updates from Chat (generations, edits, undo/restores)
+  useEffect(() => {
+    const handleSetJson = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail && typeof customEvent.detail === "string") {
+        replaceText(customEvent.detail, "Updated page JSON from AI Chat.");
+      }
+    };
+    window.addEventListener("certkraft:set-json", handleSetJson);
+    return () => window.removeEventListener("certkraft:set-json", handleSetJson);
+  }, []);
 
   const briefs = useMemo(() => extractBriefs(validation.text), [validation.text]);
 

@@ -13,8 +13,17 @@ import { CHROME_BUTTON, CHROME_PRIMARY_BUTTON } from "./buttons";
 import { Link, ROUTES } from "./Router";
 import type { RoutePath } from "./Router";
 
-/** The 56 px bar: app name, the three pages, and (on the editor page) the editor's actions. */
-export function Header({ route, actions }: { route: RoutePath | null; actions?: ReactNode }) {
+export function Header({
+  route,
+  actions,
+  user,
+  onLogout,
+}: {
+  route: RoutePath | null;
+  actions?: ReactNode;
+  user?: { email: string } | null;
+  onLogout?: () => void;
+}) {
   return (
     <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b border-border bg-surface px-4">
       <div className="flex min-w-0 items-center gap-6">
@@ -34,7 +43,23 @@ export function Header({ route, actions }: { route: RoutePath | null; actions?: 
           ))}
         </nav>
       </div>
-      {actions}
+      <div className="flex items-center gap-4">
+        {actions}
+        {user && (
+          <div className="flex items-center gap-3 border-l border-border pl-4">
+            <span className="text-small text-ink-muted">{user.email}</span>
+            {onLogout && (
+              <button
+                type="button"
+                onClick={onLogout}
+                className="inline-flex min-h-8 items-center rounded-control border border-border bg-surface px-2.5 text-small font-medium hover:bg-bg"
+              >
+                Logout
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </header>
   );
 }
@@ -43,15 +68,19 @@ export function Header({ route, actions }: { route: RoutePath | null; actions?: 
 export function Shell({
   route,
   actions,
+  user,
+  onLogout,
   children,
 }: {
   route: RoutePath | null;
   actions?: ReactNode;
+  user?: { email: string } | null;
+  onLogout?: () => void;
   children: ReactNode;
 }) {
   return (
     <div className="flex h-dvh flex-col bg-bg font-sans text-ink">
-      <Header route={route} actions={actions} />
+      <Header route={route} actions={actions} user={user} onLogout={onLogout} />
       {children}
     </div>
   );
