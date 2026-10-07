@@ -42,7 +42,7 @@ describe("PageRenderer", () => {
   });
 
   it("shows a placeholder for blocks that cannot be previewed yet, instead of failing", () => {
-    render(<PageRenderer page={load("block-timer-countdown.json")} />);
+    render(<PageRenderer page={load("block-chart-bar.json")} />);
     expect(screen.getByText(/valid but cannot be previewed yet/)).toBeVisible();
   });
 

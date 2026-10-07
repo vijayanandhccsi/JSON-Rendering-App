@@ -72,6 +72,21 @@
   --container-wide: 960px;
 
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* A short side-to-side shake for a wrong answer. Reduced motion turns it off (see below). */
+  --animate-shake: shake 300ms ease-out;
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(calc(var(--spacing) * -1));
+    }
+    75% {
+      transform: translateX(var(--spacing));
+    }
+  }
 }
 
 :root {
