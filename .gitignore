@@ -3,3 +3,7 @@ dist
 *.tsbuildinfo
 .DS_Store
 .env.local
+
+# Image files for previewing unpublished lessons are not kept in git.
+apps/preview/public/media/*
+!apps/preview/public/media/.gitkeep

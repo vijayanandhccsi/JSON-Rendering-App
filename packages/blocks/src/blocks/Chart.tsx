@@ -1,5 +1,6 @@
 import { TriangleAlert } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import { buildChartOption, chartHeight } from "../chart/options";
 import { chartDataTable } from "../chart/dataTable";
 import { readChartTokens } from "../chart/tokens";
@@ -7,11 +8,10 @@ import { ICON_STROKE_WIDTH } from "../ui/Icon";
 import { usePrefersReducedMotion } from "../ui/usePrefersReducedMotion";
 import { InlineText } from "../text/InlineText";
 import type { BlockOf } from "../types";
-import { validateBlockValue } from "../validate";
 
 type ChartBlock = BlockOf<"chart">;
 
-function Card({ block, children }: { block: ChartBlock; children: React.ReactNode }) {
+function Card({ block, children }: { block: ChartBlock; children: ReactNode }) {
   return (
     <figure className="flex flex-col gap-3 rounded-card border border-border bg-surface p-5">
       <figcaption>
@@ -62,22 +62,45 @@ function ChartError({
   );
 }
 
-function ChartView({ block }: { block: ChartBlock }) {
+type Reason = { message: string; fix?: string };
+
+/**
+ * Draws the chart. The chart library and the data check are both loaded the first time a page has a
+ * chart, so pages without charts never download them.
+ */
+export function Chart({ block }: { block: ChartBlock }) {
   const target = useRef<HTMLDivElement>(null);
   const descriptionId = useId();
   const reducedMotion = usePrefersReducedMotion();
   const [ready, setReady] = useState(false);
-  const [failure, setFailure] = useState<string | null>(null);
-  const table = useMemo(() => chartDataTable(block), [block]);
+  const [problems, setProblems] = useState<Reason[]>([]);
+  // A chart with a type or data the library cannot read has no table; the check below explains why.
+  const table = useMemo(() => {
+    try {
+      return chartDataTable(block) ?? { headers: [], rows: [] };
+    } catch {
+      return { headers: [], rows: [] };
+    }
+  }, [block]);
 
   useEffect(() => {
     let cancelled = false;
     let dispose: (() => void) | undefined;
+    setReady(false);
+    setProblems([]);
 
-    import("../chart/echarts-setup")
-      .then(({ init }) => {
+    Promise.all([import("../validate"), import("../chart/echarts-setup")])
+      .then(([{ validateBlockValue }, { init }]) => {
         const element = target.current;
         if (cancelled || !element) return;
+
+        // Data that does not match the chart type gets a clear message instead of a blank box.
+        const errors = validateBlockValue(block).filter((issue) => issue.severity === "error");
+        if (errors.length > 0) {
+          setProblems(errors.map((issue) => ({ message: issue.message, fix: issue.fix })));
+          return;
+        }
+
         const chart = init(element, undefined, { renderer: "svg" });
         const observer = new ResizeObserver(() => chart.resize());
         observer.observe(element);
@@ -94,7 +117,14 @@ function ChartView({ block }: { block: ChartBlock }) {
         // Drawing failed part way: release whatever was created before showing the error.
         dispose?.();
         dispose = undefined;
-        if (!cancelled) setFailure(cause instanceof Error ? cause.message : String(cause));
+        if (!cancelled) {
+          setProblems([
+            {
+              message: `The chart library reported: ${cause instanceof Error ? cause.message : String(cause)}.`,
+              fix: "Check the chart data in the JSON.",
+            },
+          ]);
+        }
       });
 
     return () => {
@@ -103,19 +133,7 @@ function ChartView({ block }: { block: ChartBlock }) {
     };
   }, [block, reducedMotion]);
 
-  if (failure !== null) {
-    return (
-      <ChartError
-        block={block}
-        reasons={[
-          {
-            message: `The chart library reported: ${failure}.`,
-            fix: "Check the chart data in the JSON.",
-          },
-        ]}
-      />
-    );
-  }
+  if (problems.length > 0) return <ChartError block={block} reasons={problems} />;
 
   return (
     <Card block={block}>
@@ -166,20 +184,4 @@ function ChartView({ block }: { block: ChartBlock }) {
       </table>
     </Card>
   );
-}
-
-export function Chart({ block }: { block: ChartBlock }) {
-  const problems = useMemo(
-    () => validateBlockValue(block).filter((issue) => issue.severity === "error"),
-    [block],
-  );
-  if (problems.length > 0) {
-    return (
-      <ChartError
-        block={block}
-        reasons={problems.map((problem) => ({ message: problem.message, fix: problem.fix }))}
-      />
-    );
-  }
-  return <ChartView block={block} />;
 }

@@ -18,7 +18,7 @@ import type {
 } from "@dnd-kit/core";
 import { CircleCheck, CircleX, GripVertical } from "lucide-react";
 import { useState } from "react";
-import type { ReactNode } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import { PRIMARY_BUTTON, SECONDARY_BUTTON } from "../../ui/buttons";
 import { ICON_STROKE_WIDTH } from "../../ui/Icon";
 import { jumpBetweenTargets } from "./keyboard";
@@ -101,7 +101,7 @@ export function BoardShell({ chips, slotNames, onDropOnSlot, onDropOnPool, child
 }
 
 /** The grip that picks a chip up. It is the only part that starts a drag, so the chip's own button can be clicked. */
-function Handle({ label, ...props }: { label: string } & React.HTMLAttributes<HTMLSpanElement>) {
+function Handle({ label, ...props }: { label: string } & HTMLAttributes<HTMLSpanElement>) {
   return (
     <span
       {...props}

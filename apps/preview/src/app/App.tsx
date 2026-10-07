@@ -1,9 +1,9 @@
 import { Suspense, lazy } from "react";
 import { Shell } from "./Header";
 import { Link, useRoute } from "./Router";
-import EditorPage from "../routes/EditorPage";
 
-// The gallery and the batch screen load only when opened.
+// Each page loads only when opened, so the batch screen and the gallery never download the code editor.
+const EditorPage = lazy(() => import("../routes/EditorPage"));
 const Gallery = lazy(() => import("../routes/Gallery"));
 const Batch = lazy(() => import("../routes/Batch"));
 
@@ -26,7 +26,6 @@ function NotFound() {
 
 export function App() {
   const route = useRoute();
-  if (route === "/") return <EditorPage />;
   if (route === null) return <NotFound />;
   return (
     <Suspense
@@ -38,7 +37,7 @@ export function App() {
         </Shell>
       }
     >
-      {route === "/gallery" ? <Gallery /> : <Batch />}
+      {route === "/" ? <EditorPage /> : route === "/gallery" ? <Gallery /> : <Batch />}
     </Suspense>
   );
 }

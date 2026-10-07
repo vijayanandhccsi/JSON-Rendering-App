@@ -1,6 +1,4 @@
-import { createHighlighterCore } from "shiki/core";
 import type { HighlighterCore } from "shiki/core";
-import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import type { ThemedToken } from "shiki/types";
 
 const THEME = "github-light";
@@ -66,12 +64,16 @@ export function resolveLanguage(language: string): SupportedLanguage | null {
 
 let highlighter: Promise<HighlighterCore> | undefined;
 
+// Shiki itself is loaded the first time a page has a code block, so other pages never download it.
 function getHighlighter(): Promise<HighlighterCore> {
-  highlighter ??= createHighlighterCore({
-    themes: [import("shiki/themes/github-light.mjs")],
-    langs: [],
-    engine: createJavaScriptRegexEngine({ forgiving: true }),
-  });
+  highlighter ??= Promise.all([import("shiki/core"), import("shiki/engine/javascript")]).then(
+    ([{ createHighlighterCore }, { createJavaScriptRegexEngine }]) =>
+      createHighlighterCore({
+        themes: [import("shiki/themes/github-light.mjs")],
+        langs: [],
+        engine: createJavaScriptRegexEngine({ forgiving: true }),
+      }),
+  );
   return highlighter;
 }
 

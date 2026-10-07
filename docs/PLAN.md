@@ -1,6 +1,6 @@
 # App 1: CertKraft page preview app — full plan
 
-Status: planning. Built first. Project 2 (LMS import and learner side) comes after and reuses App 1's shared package.
+Status: built (M0 to M8). The live deployment on the server is the remaining step (see `DEPLOY.md`). Project 2 (LMS import and learner side) comes after and reuses App 1's shared package.
 
 Related files: `DESIGN.md` (visual rules), `CLAUDE.md` (instructions for Claude Code), `DEPLOY.md` (VPS setup), `docs/rules.md` and `docs/guide.md` (the block rules the AI follows; these define the schema).
 
@@ -276,7 +276,7 @@ No secrets are needed. The app has no backend.
 1. Confirm that the tokens in `DESIGN.md` match the LMS `DESIGN.md`.
 2. Subdomain for the preview app (for example `preview.certkraft.com`).
 3. Where the media folder lives for preview: copied into the app, or fetched from the LMS media URL.
-4. How Project 2 consumes the package (workspace, git dependency, or private package).
+4. How Project 2 consumes the package (workspace, tarball, or private package). The package builds into `dist/` and `pnpm verify:package` proves a packed tarball works in a fresh project; see `packages/blocks/README.md`. A git dependency was not tried.
 
 ## 15. Kickoff prompts for Claude Code
 

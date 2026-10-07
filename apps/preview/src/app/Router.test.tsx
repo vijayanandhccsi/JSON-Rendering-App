@@ -20,9 +20,10 @@ describe("routeOf", () => {
 });
 
 describe("navigation", () => {
-  it("has a main menu with the three pages, marking the current one", () => {
+  it("has a main menu with the three pages, marking the current one", async () => {
     render(<App />);
-    const nav = screen.getByRole("navigation", { name: "Pages" });
+    const nav = await screen.findByRole("navigation", { name: "Pages" });
+    await screen.findByRole("toolbar", { name: "Actions" });
     expect([...nav.querySelectorAll("a")].map((a) => a.textContent)).toEqual([
       "Editor",
       "Gallery",
@@ -35,7 +36,7 @@ describe("navigation", () => {
   it("changes page without reloading, and the address changes", async () => {
     const user = userEvent.setup();
     render(<App />);
-    await user.click(screen.getByRole("link", { name: "Batch validate" }));
+    await user.click(await screen.findByRole("link", { name: "Batch validate" }));
     expect(window.location.pathname).toBe("/batch");
     expect(
       await screen.findByRole("heading", { level: 1, name: "Batch validate" }),
@@ -57,13 +58,13 @@ describe("navigation", () => {
       window.history.pushState({}, "", "/");
       window.dispatchEvent(new PopStateEvent("popstate"));
     });
-    expect(screen.getByRole("toolbar", { name: "Actions" })).toBeInTheDocument();
+    expect(await screen.findByRole("toolbar", { name: "Actions" })).toBeInTheDocument();
   });
 
   it("only shows the editor's actions on the editor page", async () => {
     const user = userEvent.setup();
     render(<App />);
-    expect(screen.getByRole("toolbar", { name: "Actions" })).toBeInTheDocument();
+    expect(await screen.findByRole("toolbar", { name: "Actions" })).toBeInTheDocument();
     await user.click(screen.getByRole("link", { name: "Gallery" }));
     await screen.findByRole("heading", { level: 1, name: "Block gallery" });
     expect(screen.queryByRole("toolbar", { name: "Actions" })).toBeNull();
@@ -72,6 +73,7 @@ describe("navigation", () => {
   it("leaves modified clicks to the browser (open in a new tab)", async () => {
     const user = userEvent.setup();
     render(<App />);
+    await screen.findByRole("toolbar", { name: "Actions" });
     await user.keyboard("{Control>}");
     await user.click(screen.getByRole("link", { name: "Gallery" }));
     await user.keyboard("{/Control}");

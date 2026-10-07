@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { EditorView } from "@codemirror/view";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { STORAGE_KEYS } from "../lib/storage";
-import { App } from "./App";
+import EditorPage from "../routes/EditorPage";
 
 const validPage = JSON.stringify({
   chapter: "network-security-basics",
@@ -44,7 +44,7 @@ afterEach(() => localStorage.clear());
 
 describe("empty state", () => {
   it("shows the instructions, a Load sample page button and a neutral status", () => {
-    render(<App />);
+    render(<EditorPage />);
     expect(screen.getByText(/Paste a page's JSON into the editor/)).toBeVisible();
     expect(chip()).toHaveTextContent("No page yet");
     expect(screen.getByRole("banner")).toHaveTextContent("CertKraft page preview");
@@ -52,7 +52,7 @@ describe("empty state", () => {
 
   it("loads the sample page from the button, and the status becomes valid", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await user.click(screen.getByRole("button", { name: "Load sample page" }));
     await waitFor(() => expect(chip()).toHaveTextContent(/^Valid/));
     expect(screen.getByRole("heading", { level: 1, name: "Full sample page" })).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe("empty state", () => {
   });
 
   it("disables Copy, Format, Clear and Download when there is nothing to act on", () => {
-    render(<App />);
+    render(<EditorPage />);
     for (const name of ["Copy", "Format", "Clear", "Download"])
       expect(screen.getByRole("button", { name })).toBeDisabled();
     for (const name of ["Paste", "Upload", "Sample"])
@@ -70,7 +70,7 @@ describe("empty state", () => {
 
 describe("header actions", () => {
   it("has the seven actions in the specified order, with Download as the only primary button", () => {
-    render(<App />);
+    render(<EditorPage />);
     const actions = within(screen.getByRole("toolbar", { name: "Actions" })).getAllByRole("button");
     expect(actions.map((button) => button.textContent)).toEqual([
       "Paste",
@@ -90,7 +90,7 @@ describe("header actions", () => {
 
   it("pastes from the clipboard into the editor, and says how to undo", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await waitFor(() => expect(chip()).toHaveTextContent("Valid"));
     expect(screen.getByText(/Pasted from the clipboard/)).toBeInTheDocument();
@@ -98,7 +98,7 @@ describe("header actions", () => {
 
   it("explains what to do when the clipboard cannot be read", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     vi.spyOn(navigator.clipboard, "readText").mockRejectedValueOnce(new Error("denied"));
     await user.click(screen.getByRole("button", { name: "Paste" }));
     expect(
@@ -109,7 +109,7 @@ describe("header actions", () => {
   });
 
   it("uploads a .json file into the editor", async () => {
-    render(<App />);
+    render(<EditorPage />);
     const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     expect(input).toHaveAttribute("accept", ".json,application/json");
     fireEvent.change(input, {
@@ -120,7 +120,7 @@ describe("header actions", () => {
   });
 
   it("refuses a very large upload", async () => {
-    render(<App />);
+    render(<EditorPage />);
     const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     const big = new File(["x"], "big.json");
     Object.defineProperty(big, "size", { value: 6 * 1024 * 1024 });
@@ -131,7 +131,7 @@ describe("header actions", () => {
 
   it("copies the JSON", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await user.click(screen.getByRole("button", { name: "Copy" }));
     expect(await navigator.clipboard.readText()).toBe(validPage);
@@ -140,7 +140,7 @@ describe("header actions", () => {
 
   it("formats the JSON with two-space indentation, or explains why it cannot", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await user.click(screen.getByRole("button", { name: "Format" }));
     expect(editorText()).toBe(`${JSON.stringify(JSON.parse(validPage), null, 2)}\n`);
@@ -153,7 +153,7 @@ describe("header actions", () => {
 
   it("loads the sample page, and clears the editor", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await user.click(screen.getByRole("button", { name: "Sample" }));
     expect(editorText()).toContain('"title": "Full sample page"');
     await user.click(screen.getByRole("button", { name: "Clear" }));
@@ -175,7 +175,7 @@ describe("download", () => {
 
   it("is only enabled when the page has no errors, and says why when it is not", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, brokenPage);
     await waitFor(() => expect(chip()).toHaveTextContent(/error/));
     expect(screen.getByRole("button", { name: "Download" })).toBeDisabled();
@@ -194,7 +194,7 @@ describe("download", () => {
     HTMLAnchorElement.prototype.click = function () {
       names.push(this.download);
     };
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await waitFor(() => expect(screen.getByRole("button", { name: "Download" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Download" }));
@@ -207,7 +207,7 @@ describe("download", () => {
 describe("while the checks catch up", () => {
   it("keeps Copy, Format and Clear in step with the text, and Download off until the new text is checked", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await waitFor(() => expect(screen.getByRole("button", { name: "Download" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Clear" }));
@@ -221,7 +221,7 @@ describe("while the checks catch up", () => {
 describe("status chip and problems", () => {
   it("shows Valid for a good page, and N errors, M warnings for a bad one", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await waitFor(() => expect(chip()).toHaveTextContent("Valid"));
     await paste(user, brokenPage);
@@ -230,7 +230,7 @@ describe("status chip and problems", () => {
 
   it("shows Valid with the number of warnings when only warnings remain", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     const longParagraph = JSON.stringify({
       ...JSON.parse(validPage),
       blocks: [
@@ -244,7 +244,7 @@ describe("status chip and problems", () => {
 
   it("lists every problem with its block, message and fix, errors before warnings", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, brokenPage);
     const panel = await screen.findByRole("region", { name: "Problems" });
     expect(panel).toHaveTextContent("Problems: 2 errors, 0 warnings");
@@ -258,7 +258,7 @@ describe("status chip and problems", () => {
 
   it("collapses and expands", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, brokenPage);
     const toggle = await screen.findByRole("button", { name: /^Problems:/ });
     expect(toggle).toHaveAttribute("aria-expanded", "true");
@@ -269,7 +269,7 @@ describe("status chip and problems", () => {
 
   it("copies all the problems as text to paste back to the AI", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, brokenPage);
     await user.click(await screen.findByRole("button", { name: "Copy problems" }));
     const copied = await navigator.clipboard.readText();
@@ -280,7 +280,7 @@ describe("status chip and problems", () => {
 
   it("moves focus into the editor when a problem is chosen", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, brokenPage);
     const rows = within(await screen.findByRole("region", { name: "Problems" })).getAllByRole(
       "button",
@@ -292,7 +292,7 @@ describe("status chip and problems", () => {
 
   it("reports a JSON syntax error with its line and column", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, '{\n  "chapter": "x",\n  "blocks": [,]\n}');
     const panel = await screen.findByRole("region", { name: "Problems" });
     expect(panel).toHaveTextContent("Line 3, column 14");
@@ -302,7 +302,7 @@ describe("status chip and problems", () => {
 describe("preview", () => {
   it("shows the page info panel outside the page, and the reading time under the title", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     const info = await screen.findByRole("complementary", { name: "Page info" });
     expect(info).toHaveTextContent("network-security-basics");
@@ -314,7 +314,7 @@ describe("preview", () => {
 
   it("keeps showing the last valid page, with a notice, while the text has errors", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await screen.findByRole("heading", { level: 1, name: "What is a firewall?" });
     await paste(user, brokenPage);
@@ -326,14 +326,14 @@ describe("preview", () => {
 
   it("asks the author to fix the errors when there has never been a valid page", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, brokenPage);
     expect(await screen.findByText(/Fix the 2 errors to see the page/)).toBeInTheDocument();
   });
 
   it("shows the page in a frame as wide as the chosen device, and remembers the choice", async () => {
     const user = userEvent.setup();
-    const { unmount } = render(<App />);
+    const { unmount } = render(<EditorPage />);
     await paste(user, validPage);
     const frame = await screen.findByTestId("device-frame");
     expect(frame).toHaveStyle({ width: "390px" });
@@ -343,14 +343,14 @@ describe("preview", () => {
     await user.click(screen.getByRole("radio", { name: /Desktop/ }));
     expect(screen.getByTestId("device-frame")).toHaveStyle({ width: "1280px" });
     unmount();
-    render(<App />);
+    render(<EditorPage />);
     expect(screen.getByRole("radio", { name: /Desktop/ })).toBeChecked();
     expect(localStorage.getItem(STORAGE_KEYS.device)).toBe("desktop");
   });
 
   it("has the width toggle as a radio group that works with the arrow keys", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     const group = screen.getByRole("radiogroup", { name: "Preview width" });
     expect(within(group).getAllByRole("radio")).toHaveLength(3);
     screen.getByRole("radio", { name: /Mobile/ }).focus();
@@ -371,7 +371,7 @@ describe("media folder", () => {
 
   it("uses /media/ by default, can be changed, and the images follow", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, withImage);
     expect(await screen.findByRole("img", { name: "OSI" })).toHaveAttribute(
       "src",
@@ -392,7 +392,7 @@ describe("media folder", () => {
 
   it("explains an address that is not valid and keeps the panel open", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await user.click(screen.getByRole("button", { name: /Media folder/ }));
     const input = screen.getByRole("textbox", { name: "Where the image files are" });
     await user.clear(input);
@@ -404,7 +404,7 @@ describe("media folder", () => {
 
   it("closes with Escape and returns focus to its button; Use default restores /media/", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     const button = screen.getByRole("button", { name: /Media folder/ });
     await user.click(button);
     expect(screen.getByRole("textbox", { name: "Where the image files are" })).toHaveFocus();
@@ -425,11 +425,11 @@ describe("autosave", () => {
 
   it("saves the JSON in this browser after a short pause, and restores it on the next visit", async () => {
     const user = userEvent.setup();
-    const { unmount } = render(<App />);
+    const { unmount } = render(<EditorPage />);
     await paste(user, validPage);
     await waitFor(() => expect(localStorage.getItem(STORAGE_KEYS.json)).toBe(validPage));
     unmount();
-    render(<App />);
+    render(<EditorPage />);
     expect(editorText()).toBe(validPage);
     expect(
       await screen.findByRole("heading", { level: 1, name: "What is a firewall?" }),
@@ -438,7 +438,7 @@ describe("autosave", () => {
 
   it("forgets the saved JSON when the editor is cleared", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await waitFor(() => expect(localStorage.getItem(STORAGE_KEYS.json)).not.toBeNull());
     await user.click(screen.getByRole("button", { name: "Clear" }));
@@ -452,7 +452,7 @@ describe("autosave", () => {
     const open = vi.spyOn(XMLHttpRequest.prototype, "open");
     const beacon = vi.fn();
     Object.defineProperty(navigator, "sendBeacon", { value: beacon, configurable: true });
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 700));
@@ -467,7 +467,7 @@ describe("autosave", () => {
 describe("layout", () => {
   it("has a draggable divider that also works with the keyboard and is limited to 25-75%", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     const divider = screen.getByRole("separator", { name: "Resize the editor and the preview" });
     expect(divider).toHaveAttribute("aria-valuenow", "50");
     divider.focus();
@@ -484,7 +484,7 @@ describe("layout", () => {
 
   it("is two tabs, JSON and Preview, on narrow screens", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     const tabs = screen.getAllByRole("tab");
     expect(tabs.map((tab) => tab.textContent)).toEqual(["JSON", "Preview"]);
     expect(screen.getByRole("tab", { name: "JSON" })).toHaveAttribute("aria-selected", "true");
@@ -500,7 +500,7 @@ describe("layout", () => {
 
   it("returns to the JSON tab when a problem is chosen", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, brokenPage);
     const row = within(await screen.findByRole("region", { name: "Problems" })).getAllByRole(
       "button",
@@ -517,7 +517,7 @@ describe("layout", () => {
 describe("images and leaving the page", () => {
   it("lists the images the page needs in an Images panel", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     const withBriefs = JSON.stringify({
       ...JSON.parse(validPage),
       blocks: [{ type: "image", src: "osi.webp", alt: "OSI", description: "Layers." }],
@@ -534,7 +534,7 @@ describe("images and leaving the page", () => {
 
   it("saves the JSON straight away when the page is left, even within the autosave pause", async () => {
     const user = userEvent.setup();
-    const { unmount } = render(<App />);
+    const { unmount } = render(<EditorPage />);
     await paste(user, validPage);
     unmount();
     expect(localStorage.getItem(STORAGE_KEYS.json)).toBe(validPage);
@@ -542,7 +542,7 @@ describe("images and leaving the page", () => {
 
   it("saves the JSON when the browser tab is closed or hidden", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<EditorPage />);
     await paste(user, validPage);
     window.dispatchEvent(new Event("pagehide"));
     expect(localStorage.getItem(STORAGE_KEYS.json)).toBe(validPage);

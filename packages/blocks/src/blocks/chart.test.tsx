@@ -122,10 +122,10 @@ describe("chart block", () => {
     expect(echarts.dispose).toHaveBeenCalled();
   });
 
-  it("shows what is wrong, and how to fix it, when the data does not match the chart type", () => {
+  it("shows what is wrong, and how to fix it, when the data does not match the chart type", async () => {
     const broken = { ...bar, series: [{ name: "Port", values: [22] }] } as Block;
     show(broken);
-    const alert = screen.getByRole("alert");
+    const alert = await screen.findByRole("alert");
     expect(alert).toHaveTextContent("This chart cannot be drawn.");
     expect(alert).toHaveTextContent("series[0].values");
     expect(alert).toHaveTextContent("1 values but there are 2 labels");
@@ -191,9 +191,9 @@ describe("chart block", () => {
       { type: "chart", chartType: "waterfall", title: "W", description: "d" },
       "must be one of",
     ],
-  ])("%s shows an error instead of a blank box", (_name, block, message) => {
+  ])("%s shows an error instead of a blank box", async (_name, block, message) => {
     show(block as unknown as Block);
-    expect(screen.getByRole("alert")).toHaveTextContent(message);
+    expect(await screen.findByRole("alert")).toHaveTextContent(message);
     expect(echarts.init).not.toHaveBeenCalled();
   });
 });

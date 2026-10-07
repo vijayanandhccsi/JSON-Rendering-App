@@ -57,8 +57,10 @@ sudo ufw allow 'Nginx Full'
 sudo ufw enable
 
 # Tools
-sudo apt install -y git nginx apache2-utils certbot python3-certbot-nginx
+sudo apt install -y git nginx certbot python3-certbot-nginx
 ```
+
+If the server already runs other sites with Nginx (it is fine to add one more), skip the Nginx and firewall lines you already have. A new `preview` site with its own `server_name` does not affect the others. `apache2-utils` (for `htpasswd`) and `rsync` are optional: step 6 shows a password method that needs no extra package, and `deploy.sh` copies the build with `tar` when `rsync` is not installed.
 
 ## 4. Install Node and pnpm (once)
 
@@ -87,9 +89,13 @@ The build output is in `apps/preview/dist/`.
 
 Example domain: `preview.certkraft.com` (replace with your own). First add a DNS **A record** for it that points to the VPS IP address.
 
-Create the password file:
+Create the password file (either way, you are asked for the password):
 ```
 sudo htpasswd -c /etc/nginx/.htpasswd-preview YOUR_USERNAME
+```
+or, without `htpasswd`:
+```
+printf 'YOUR_USERNAME:%s\n' "$(openssl passwd -apr1)" | sudo tee /etc/nginx/.htpasswd-preview >/dev/null
 ```
 
 Copy the build to the web folder:
@@ -140,7 +146,7 @@ sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d preview.certkraft.com
 ```
 
-Also add a `robots.txt` in the app's `public/` folder containing `User-agent: *` and `Disallow: /`.
+Run certbot straight away: until it adds HTTPS, the password would travel unencrypted. Also add a `robots.txt` in the app's `public/` folder containing `User-agent: *` and `Disallow: /` (the repo already has one).
 
 ## 7. Deploy script
 
@@ -157,6 +163,13 @@ echo "Deployed."
 Make it executable with `chmod +x deploy.sh`, then run `./deploy.sh` after each change.
 
 Images for previewing go in `/var/www/preview/media/`. The `--exclude 'media/'` line keeps them from being deleted on deploy.
+
+## 7a. The files in this repo
+
+- `deploy.sh` (repo root) is the script from step 7, with a `tar` fallback for servers without `rsync`. It also runs the type check and the tests before building, so a broken version is never copied to the server. Set `WEB_ROOT` to use another folder.
+- `deploy/nginx-preview.conf` is the Nginx config from step 6. A test checks that it matches the block above, so the two cannot drift apart.
+- Image files for previewing go in `/var/www/preview/media/` on the server (or in `apps/preview/public/media/` on your computer). They are not kept in git, and `deploy.sh` does not delete them.
+- To point the app at another media address for everyone, build with `VITE_MEDIA_BASE_URL=https://example.com/media/ pnpm build`. Each person can also change it in the app (Media folder).
 
 ## 8. Checks after deploying
 
