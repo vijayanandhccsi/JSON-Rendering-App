@@ -102,17 +102,15 @@ describe("list", () => {
     expect(container.querySelectorAll("li svg")).toHaveLength(2);
   });
 
-  it("renders icon lists with the icon on the right when asked", async () => {
-    show({
+  it("renders icon lists with the icon on the right when asked", () => {
+    const { container } = show({
       type: "list",
       style: "icon",
       iconPosition: "right",
       items: [{ icon: "lock", text: "Private" }],
     });
     expect(screen.getByRole("listitem")).toHaveClass("flex-row-reverse");
-    expect(
-      await screen.findByRole("listitem").then((li) => li.querySelector("svg")),
-    ).not.toBeNull();
+    expect(container.querySelector("li svg.lucide-lock")).not.toBeNull();
   });
 
   it("shows a plain circle for an unknown icon name", () => {

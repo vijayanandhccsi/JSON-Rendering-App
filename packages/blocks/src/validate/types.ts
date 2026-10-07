@@ -12,6 +12,8 @@ export interface ValidationIssue {
   message: string;
   /** How to fix it, in plain English. */
   fix: string;
+  /** Machine-readable kind of problem, for the few kinds that need special handling. */
+  code?: string;
   /** One-based line and column, only for JSON syntax errors. */
   line?: number;
   column?: number;

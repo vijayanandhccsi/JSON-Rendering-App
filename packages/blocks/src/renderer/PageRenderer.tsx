@@ -29,7 +29,12 @@ export function PageRenderer({ page, mediaBaseUrl = "/media/" }: PageRendererPro
     <MediaProvider baseUrl={mediaBaseUrl}>
       <article lang="en" className="mx-auto w-full max-w-wide bg-bg px-4 py-10 text-ink">
         <div className="flex flex-col gap-6">
-          <h1 className="mx-auto w-full max-w-reading text-title font-semibold">{page.title}</h1>
+          <div className="mx-auto w-full max-w-reading">
+            <h1 className="text-title font-semibold">{page.title}</h1>
+            {page.estimatedMinutes ? (
+              <p className="mt-2 text-caption text-ink-muted">{page.estimatedMinutes} min read</p>
+            ) : null}
+          </div>
           {page.blocks.map((block, index) => (
             <div
               key={index}

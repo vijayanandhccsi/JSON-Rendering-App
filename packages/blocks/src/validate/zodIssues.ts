@@ -7,6 +7,7 @@ export interface Described {
   label: string;
   message: string;
   fix: string;
+  code?: string;
 }
 
 const EXPECTED: Record<string, string> = {
@@ -154,11 +155,12 @@ export function describeZodIssue(
             : `Change ${where} so it matches the required format.`,
       };
     case "custom": {
-      const params = issue.params as { fix?: string } | undefined;
+      const params = issue.params as { fix?: string; code?: string } | undefined;
       return {
         label,
         message: `${where} ${issue.message}.`,
         fix: params?.fix ?? "Check this field against guide.md.",
+        ...(params?.code ? { code: params.code } : {}),
       };
     }
     default:

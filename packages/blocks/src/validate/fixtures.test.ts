@@ -132,7 +132,7 @@ const expectations: Record<string, Expectation> = {
   "imagebriefs-missing": error("imageBriefs", "is missing"),
   "warn-video-tbd": warning("blocks[0].id", '"TBD"'),
   "warn-paragraph-too-long": warning("blocks[0].text", "85 words"),
-  "warn-unknown-icon": warning("blocks[0].icon", 'Did you mean "shield-check"'),
+  "icon-not-in-set": error("blocks[0].icon", "not in the allowed icon list"),
 };
 
 describe("invalid fixtures", () => {
@@ -181,6 +181,20 @@ describe("invalid fixtures", () => {
     expect(result.valid).toBe(false);
     expect(result.errors[0]).toMatchObject({ path: "imageBriefs", severity: "error" });
     expect(result.errors[0]?.message).toContain("empty");
+  });
+
+  it("suggests the closest allowed icon and lists all allowed icons in the pasted text", () => {
+    const result = validateJsonText(read("invalid", "icon-not-in-set.json"));
+    expect(result.errors[0]?.fix).toContain('Did you mean "shield-check"?');
+    expect(result.errors[0]?.code).toBe("icon-not-allowed");
+    expect(formatIssues(result)).toContain("Allowed icons: ");
+    expect(formatIssues(result)).toContain("shield-check");
+  });
+
+  it("does not list the icons when no icon is wrong", () => {
+    expect(formatIssues(validateJsonText(read("invalid", "missing-title.json")))).not.toContain(
+      "Allowed icons",
+    );
   });
 
   it("reports every problem in one pass, not just the first", () => {

@@ -112,7 +112,7 @@ server {
 
     add_header X-Robots-Tag "noindex, nofollow" always;
     add_header X-Content-Type-Options "nosniff" always;
-    add_header Referrer-Policy "no-referrer" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 
     gzip on;
     gzip_types text/css application/javascript application/json image/svg+xml;
@@ -165,6 +165,9 @@ Images for previewing go in `/var/www/preview/media/`. The `--exclude 'media/'` 
 3. Open it on a phone.
 4. Confirm `https://preview.certkraft.com/robots.txt` disallows everything.
 5. Run `curl -I` on the URL and confirm the `X-Robots-Tag` header is present.
+6. Play one unlisted Vimeo video that has a `hash`. The referrer policy sends only the site name to Vimeo (not the full page address), which is enough for Vimeo's domain checks.
+
+**Vimeo domain restriction:** the free plan has no domain restriction, so nothing breaks yet. After upgrading, check whether domain restriction is included. If it is, add the preview domain and the LMS domain to Vimeo's allowed list.
 
 ## 9. If the server uses cPanel or Apache
 

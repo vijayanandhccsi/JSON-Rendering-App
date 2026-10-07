@@ -39,7 +39,7 @@ You are generating ONE reading page as JSON for the CertKraft LMS. Follow every 
 ## 6. Design
 
 20. Never specify colors, fonts, pixel sizes, or CSS. Use only the variants listed in the guide.
-21. Icons are Lucide icon names in kebab-case, for example `shield-check`, `server`, `network`, `lock`. Use only icons you are sure exist in Lucide.
+21. Icons: use ONLY icons from the allowed icon list in `guide.md` section 6, written in kebab-case, for example `shield-check`, `server`, `network`, `lock`. If no icon on the list fits, leave the optional `icon` field out. Never use an icon that is not on the list.
 
 ## 7. Content
 
@@ -57,4 +57,5 @@ Check each item, then output the JSON:
 3. Does every block have all its required fields and only allowed values?
 4. Does every image have `alt` and `description`, and is it listed in `imageBriefs`?
 5. Are there any containers inside containers?
-6. Did I invent any facts, fields, or values?
+6. Is every icon name on the allowed list in `guide.md` section 6?
+7. Did I invent any facts, fields, or values?

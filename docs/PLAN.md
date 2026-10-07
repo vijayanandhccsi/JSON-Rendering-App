@@ -173,7 +173,7 @@ Errors block download. Warnings do not.
 | Chart data does not match its `chartType` (series length, single-series types, heatmap size, unknown Sankey node, Gantt end before start) | Error |
 | Chart missing `description` | Error |
 | Paragraph over 80 words | Warning |
-| Icon name not found in Lucide | Warning |
+| Icon name not in the curated icon set (`guide.md` section 6) | Error |
 | `imageBriefs` missing or empty when images are used | Error |
 
 Every error message must say what is wrong and how to fix it, in plain English, so it can be pasted straight back to the AI.

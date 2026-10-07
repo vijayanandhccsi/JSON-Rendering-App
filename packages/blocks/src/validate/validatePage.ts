@@ -26,8 +26,17 @@ function error(
   path: readonly PathSegment[],
   message: string,
   fix: string,
+  code?: string,
 ): void {
-  issues.push({ severity: "error", blockIndex, blockType, path: pathToString(path), message, fix });
+  issues.push({
+    severity: "error",
+    blockIndex,
+    blockType,
+    path: pathToString(path),
+    message,
+    fix,
+    ...(code ? { code } : {}),
+  });
 }
 
 /** Children of a container, as the paths where they live. */
@@ -144,6 +153,7 @@ function validateBlock(
         [...path, ...(issue.path as PathSegment[])],
         described.message,
         described.fix,
+        described.code,
       );
     }
   }
@@ -178,7 +188,15 @@ export function validatePage(input: unknown): ValidationResult {
   if (!shell.success) {
     for (const issue of shell.error.issues) {
       const described = describeZodIssue(issue, input, null);
-      error(issues, null, null, issue.path as PathSegment[], described.message, described.fix);
+      error(
+        issues,
+        null,
+        null,
+        issue.path as PathSegment[],
+        described.message,
+        described.fix,
+        described.code,
+      );
     }
   }
 

@@ -1,16 +1,30 @@
 import { z } from "zod";
+import { closestMatch } from "../closestMatch";
+import { ICON_NAMES } from "../icons/iconNames";
+
+/** Issue code for an icon outside the curated set. */
+export const ICON_NOT_ALLOWED = "icon-not-allowed";
 
 /** Matches an opening, closing or self-closing HTML tag such as <b>, </div> or <br/>. */
 const HTML_TAG = /<\/?[a-z][a-z0-9-]*(\s[^<>]*)?\/?>/i;
 
-/** A custom issue: `message` continues the sentence that starts with the field name. */
+/**
+ * A custom issue: `message` continues the sentence that starts with the field name.
+ * `code` is an optional machine-readable name for the kind of problem.
+ */
 export function customIssue(
   ctx: z.RefinementCtx,
   message: string,
   fix: string,
   path?: (string | number)[],
+  code?: string,
 ): void {
-  ctx.addIssue({ code: "custom", message, params: { fix }, ...(path ? { path } : {}) });
+  ctx.addIssue({
+    code: "custom",
+    message,
+    params: { fix, ...(code ? { code } : {}) },
+    ...(path ? { path } : {}),
+  });
 }
 
 /** Plain text that may only use **bold**, *italic* and `code`. HTML tags are rejected. */
@@ -30,8 +44,20 @@ export const PlainText = z
 /** Text that is shown as-is (code and terminal output). Not checked for HTML. */
 export const RawText = z.string().min(1);
 
-/** A Lucide icon name in kebab-case. Unknown names are reported as a warning, not an error. */
-export const IconName = z.string().min(1);
+const ALLOWED_ICONS: ReadonlySet<string> = new Set(ICON_NAMES);
+
+/** An icon from the curated set (guide.md section 6). Any other name is an error. */
+export const IconName = z.string().superRefine((value, ctx) => {
+  if (ALLOWED_ICONS.has(value)) return;
+  const guess = closestMatch(value, ICON_NAMES);
+  customIssue(
+    ctx,
+    `uses the icon "${value}", which is not in the allowed icon list`,
+    `${guess ? `Did you mean "${guess}"? ` : ""}Choose an icon from the allowed list in guide.md section 6, or leave the optional "icon" out.`,
+    undefined,
+    ICON_NOT_ALLOWED,
+  );
+});
 
 /** A position from 0 to 100, as a percentage from the top-left of an image. */
 export const Coordinate = z.number().min(0).max(100);

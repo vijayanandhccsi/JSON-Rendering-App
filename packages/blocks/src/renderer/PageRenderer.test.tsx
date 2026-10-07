@@ -30,7 +30,7 @@ describe("PageRenderer", () => {
       imageBriefs: load("block-image.json").imageBriefs,
     };
     const { container } = render(<PageRenderer page={page as typeof base} />);
-    const wrappers = [...container.querySelectorAll("article > div > div")].map((el) =>
+    const wrappers = [...container.querySelectorAll("article > div > div:not(:first-child)")].map((el) =>
       el.className.includes("max-w-wide"),
     );
     expect(wrappers).toEqual([false, false, true, true]);

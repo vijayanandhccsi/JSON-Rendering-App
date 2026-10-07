@@ -1,6 +1,5 @@
-import { LUCIDE_ICON_NAMES } from "./icons";
 import type { ValidationIssue } from "./types";
-import { closestMatch, isRecord, pathToString } from "./util";
+import { isRecord, pathToString } from "./util";
 import type { PathSegment } from "./util";
 
 const MAX_PARAGRAPH_WORDS = 80;
@@ -75,33 +74,6 @@ function imagesIn(block: Record<string, unknown>, path: PathSegment[]): Found[] 
   return found;
 }
 
-function iconsIn(block: Record<string, unknown>, path: PathSegment[]): Found[] {
-  const found: Found[] = [];
-  const add = (item: unknown, itemPath: PathSegment[]) => {
-    if (isRecord(item) && typeof item.icon === "string") {
-      found.push({ value: item.icon, path: [...itemPath, "icon"] });
-    }
-  };
-  const addAll = (items: unknown, key: string) => {
-    if (Array.isArray(items)) items.forEach((item: unknown, i) => add(item, [...path, key, i]));
-  };
-  switch (block.type) {
-    case "card":
-      add(block, path);
-      break;
-    case "list":
-      if (block.style === "icon") addAll(block.items, "items");
-      break;
-    case "grid":
-      addAll(block.items, "items");
-      break;
-    case "layout":
-      addAll(block.tiles, "tiles");
-      break;
-  }
-  return found;
-}
-
 /**
  * Checks that look across the whole page. Most are warnings (problems that do not stop the page
  * from working); a page that uses images without "imageBriefs" is an error.
@@ -154,21 +126,6 @@ export function collectPageChecks(page: Record<string, unknown>): ValidationIssu
 
     for (const image of imagesIn(block, path)) {
       images.push({ ...image, blockIndex, blockType: blockType ?? "image" });
-    }
-
-    for (const icon of iconsIn(block, path)) {
-      if (!LUCIDE_ICON_NAMES.has(icon.value)) {
-        const suggestion = closestMatch(icon.value, [...LUCIDE_ICON_NAMES]);
-        warn(
-          blockIndex,
-          blockType,
-          icon.path,
-          `The icon "${icon.value}" is not a Lucide icon name. A plain circle will be shown instead.`,
-          suggestion
-            ? `Use a real Lucide icon name in kebab-case. Did you mean "${suggestion}"?`
-            : "Use a real Lucide icon name in kebab-case, for example shield-check, server or lock.",
-        );
-      }
     }
   }
 

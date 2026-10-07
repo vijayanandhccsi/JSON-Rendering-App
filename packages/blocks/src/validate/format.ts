@@ -1,3 +1,5 @@
+import { ICON_NAMES } from "../icons/iconNames";
+import { ICON_NOT_ALLOWED } from "../schema/common";
 import type { ValidationIssue, ValidationResult } from "./types";
 
 function where(issue: ValidationIssue): string {
@@ -16,5 +18,8 @@ export function formatIssues(result: ValidationResult): string {
     lines.push(`${i + 1}. [${issue.severity}] ${where(issue)}: ${issue.message}`);
     lines.push(`   Fix: ${issue.fix}`);
   });
+  if (errors.some((issue) => issue.code === ICON_NOT_ALLOWED)) {
+    lines.push("", `Allowed icons: ${ICON_NAMES.join(", ")}`);
+  }
   return lines.join("\n");
 }
