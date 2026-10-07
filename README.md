@@ -79,6 +79,66 @@ Follow [docs/DEPLOY.md](docs/DEPLOY.md). In short: build the app, serve the file
 
 The LMS imports `@certkraft/blocks` and uses the same `PageRenderer` and `validatePage`. How to install it, the Tailwind setup and the lazy loading are in [packages/blocks/README.md](packages/blocks/README.md).
 
+## AI Chat Interface & Backend Server
+
+The repository includes a Node/Express backend server (`apps/server`) providing a Claude-style AI Chat interface with SQLite persistence, stream-based model completion (Claude & Gemini), JSON validation, RFC 6902 patch editing, and outline section-by-section generation.
+
+### Installation & Environment Setup
+
+1. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Set API keys and session secrets in `.env`:
+   ```env
+   PORT=3001
+   DATABASE_PATH=certkraft.db
+   SESSION_SECRET=your-secure-secret
+   ANTHROPIC_API_KEY=your-anthropic-key
+   GEMINI_API_KEY=your-gemini-key
+   ```
+
+### Running the App & Server
+
+```bash
+pnpm install
+pnpm dev            # Starts Vite app and API server concurrently
+pnpm build          # Builds @certkraft/blocks, apps/preview, and apps/server
+pnpm test           # Runs all unit and integration test suites
+pnpm typecheck      # Typechecks all packages
+```
+
+### Creating Users (CLI Seed)
+
+To create a user account for the protected chat API:
+
+```bash
+pnpm --filter @certkraft/server create-user
+```
+Prompts for email and password, hashes the password with bcrypt, and stores the user in SQLite.
+
+### Running Backups & Restoring
+
+To back up the SQLite database and `.env` config into a dated folder inside `backups/` (retaining the 7 latest backups):
+
+```bash
+pnpm --filter @certkraft/server backup
+```
+
+To schedule automatic daily backups via `cron`:
+```cron
+0 2 * * * cd /path/to/certkraft-pages && pnpm --filter @certkraft/server backup >> /var/log/certkraft-backup.log 2>&1
+```
+
+To restore from a backup:
+1. Stop the server (`pnpm stop` or systemd service).
+2. Copy the `.db` file and `.env` from your desired `backups/backup-YYYY-MM-DD_HH-mm-ss/` directory into the project root:
+   ```bash
+   cp backups/backup-2026-10-07_16-12-30/certkraft.db ./certkraft.db
+   cp backups/backup-2026-10-07_16-12-30/.env ./.env
+   ```
+3. Restart the server (`pnpm dev` or `pnpm --filter @certkraft/server start`).
+
 ## Status
 
-All milestones M0 to M7 are built and tested. M8 (this hand-off) added the deploy files, the package build and these READMEs. The live deployment on the server is a step for the server owner: see `docs/DEPLOY.md`.
+All milestones M0 through M11 are fully built, tested, and verified.

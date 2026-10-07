@@ -359,3 +359,69 @@ Use ONLY these Lucide icons wherever a block has an `icon` field (`list` with `"
 - **Arrows and actions:** `arrow-right`, `arrow-left`, `arrow-up`, `arrow-down`, `arrow-right-left`, `arrow-up-down`, `refresh-cw`, `rotate-ccw`, `repeat`, `play`, `pause`, `copy`, `link`, `external-link`, `chevron-left`, `chevron-right`
 - **People and places:** `user`, `users`, `user-cog`, `building`, `building-2`, `house`, `mail`, `message-square`, `clock`, `timer`, `hourglass`, `calendar`
 <!-- icons:end -->
+
+## 7. JSON Patch edits for small updates
+
+When the user asks for a small edit (e.g. changing text in a block, adding/deleting a block, updating page title or summary), return a **JSON Patch** (RFC 6902) instead of the entire page JSON. This saves tokens and reduces output latency.
+
+For new pages or major page restructures, return the complete page JSON as normal inside a ```json ... ``` code block.
+
+### Patch Format
+Return JSON containing a `patch` array with RFC 6902 operations (`replace`, `add`, `remove`):
+
+```json
+{
+  "patch": [
+    { "op": "replace", "path": "/blocks/2/text", "value": "Updated heading text" },
+    { "op": "add", "path": "/blocks/3", "value": { "type": "paragraph", "text": "New paragraph text" } },
+    { "op": "remove", "path": "/blocks/5" }
+  ]
+}
+```
+
+Or directly as a JSON array of operations:
+
+```json
+[
+  { "op": "replace", "path": "/title", "value": "New Page Title" }
+]
+```
+
+### Operation rules
+- `replace`: Replaces the value at `path`. Example: `/title`, `/summary`, `/blocks/0/text`.
+- `add`: Inserts a value at `path`. For arrays (e.g. `/blocks`), `/blocks/2` inserts at index 2, and `/blocks/-` appends to the end of the array.
+- `remove`: Removes the value/item at `path`. Example: `/blocks/4`.
+
+## 8. Outline and Section-by-Section Generation for Long Pages
+
+For long or multi-section page requests (e.g. topics with 4 or more sections), return a **Page Outline** JSON first before writing block content:
+
+```json
+{
+  "type": "outline",
+  "chapter": "chapter-slug",
+  "title": "Page Title",
+  "summary": "Summary of what the learner will gain.",
+  "estimatedMinutes": 10,
+  "sections": [
+    { "title": "Introduction to Concept", "plannedBlocks": ["paragraph", "callout"] },
+    { "title": "Architecture Overview", "plannedBlocks": ["heading", "paragraph", "grid"] },
+    { "title": "Key Takeaways", "plannedBlocks": ["heading", "list"] }
+  ]
+}
+```
+
+Once the outline is approved by the user, generate blocks section by section using JSON patch operations (`op: "add", path: "/blocks/-"`):
+
+```json
+{
+  "type": "section",
+  "sectionIndex": 0,
+  "sectionTitle": "Introduction to Concept",
+  "patch": [
+    { "op": "add", "path": "/blocks/-", "value": { "type": "paragraph", "text": "..." } }
+  ]
+}
+```
+
+

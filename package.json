@@ -11,7 +11,8 @@
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "gen:icons": "pnpm --filter @certkraft/blocks gen:icons"
+    "gen:icons": "pnpm --filter @certkraft/blocks gen:icons",
+    "create-user": "pnpm --filter @certkraft/server create-user"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
