@@ -108,6 +108,9 @@ importers:
       '@anthropic-ai/sdk':
         specifier: ^0.131.0
         version: 0.131.0(zod@4.6.5)
+      '@certkraft/blocks':
+        specifier: workspace:*
+        version: link:../../packages/blocks
       '@google/genai':
         specifier: ^2.27.0
         version: 2.27.0

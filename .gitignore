@@ -11,6 +11,7 @@ dist
 *.db-shm
 data/
 backups/
+server.log
 
 # Image files for previewing unpublished lessons are not kept in git.
 apps/preview/public/media/*

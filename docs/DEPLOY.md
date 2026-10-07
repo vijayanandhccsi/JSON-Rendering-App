@@ -194,17 +194,49 @@ RewriteRule . /index.html [L]
 - Use SSH keys, turn off root login and password SSH once keys work, and keep the firewall on.
 - Back up the repository on GitHub. The server holds only build output and the media folder, so there is nothing else to back up.
 
-## 11. Adding a password again
+## 12. Deploying updates, rollbacks, backups and key rotation
 
-The site has no sign-in. If you want one, create a password file and add two lines to the `server` block in `/etc/nginx/sites-available/preview` (also to the HTTPS block that certbot adds):
+### Deploying an update
+To deploy an update from the GitHub repository:
+```bash
+./deploy.sh
+```
+The script will:
+1. Pull the latest `main` branch.
+2. Run `pnpm install`, `pnpm typecheck`, and `pnpm build`.
+3. Copy static frontend assets to `/var/www/preview`.
+4. Restart the backend process (`apps/server/dist/index.js`).
+5. Perform a health check against `http://127.0.0.1:3001/api/health`.
 
-```
-printf 'YOUR_USERNAME:%s\n' "$(openssl passwd -apr1)" | sudo tee /etc/nginx/.htpasswd-preview >/dev/null
-sudo chown root:www-data /etc/nginx/.htpasswd-preview && sudo chmod 640 /etc/nginx/.htpasswd-preview
-```
-```
-    auth_basic "Preview";
-    auth_basic_user_file /etc/nginx/.htpasswd-preview;
+### Rolling back
+If a deployment fails the health check, `deploy.sh` automatically rolls back to the previous git commit.
+To manually roll back to a specific commit:
+```bash
+git checkout <commit-hash>
+pnpm build
+pm2 restart certkraft-server # or restart background process
 ```
 
-Then `sudo nginx -t && sudo systemctl reload nginx`. The password is checked by Nginx only; the app itself has no login.
+### Restoring from a backup
+Backups are created daily via cron or manually by running `pnpm --filter @certkraft/server backup`.
+To restore a backup:
+1. Stop the backend process: `pm2 stop certkraft-server` (or kill background process).
+2. Copy the `.db` database file and `.env` file from the target backup folder into the workspace root:
+   ```bash
+   cp backups/backup-YYYY-MM-DD_HH-mm-ss/certkraft.db ./certkraft.db
+   cp backups/backup-YYYY-MM-DD_HH-mm-ss/.env ./.env
+   ```
+3. Restart the backend process: `pm2 start certkraft-server`.
+
+### Rotating API keys
+If your Anthropic or Gemini API key or `SESSION_SECRET` is compromised or needs rotation:
+1. Open `/home/ubuntu/certkraft-pages/.env` with strict permissions:
+   ```bash
+   nano .env
+   ```
+2. Replace `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, or `SESSION_SECRET` with the new values.
+3. Restart the backend server:
+   ```bash
+   pm2 restart certkraft-server # or pkill -f "node apps/server/dist/index.js"
+   ```
+
